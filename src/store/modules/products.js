@@ -6,55 +6,55 @@ export default {
   namespaced: true,
 
   state: {
-    projects: [],
-    projectsCount: 0
+    products: [],
+    productsCount: 0
 
   },
   getters: {},
   mutations: {
-    SET_PROJECTS (state, payload) {
-      state.projects = payload
+    SET_PRODUCTS (state, payload) {
+      state.products = payload
     },
-    NEW_PROJECT (state, payload) {
-      state.projects.push(payload)
+    NEW_PRODUCT (state, payload) {
+      state.products.push(payload)
     },
-    DELETE_PROJECT (state, payload) {
-      state.projects.push(payload)
+    DELETE_PRODUCT (state, payload) {
+      state.products.push(payload)
     },
-    SET_PROJECTS_COUNT (state, payload) {
-      state.projectsCount = payload
+    SET_PRODUCTS_COUNT (state, payload) {
+      state.productsCount = payload
     }
   },
   actions: {
-    async getAllProjects ({ commit }) {
+    async getAllProducts ({ commit }) {
       const response = await $http.Api({
         method: 'GET',
-        url: '/projects'
+        url: '/products'
       })
-      commit('SET_PROJECTS', response.data?.data)
-      commit('SET_PROJECTS_COUNT', response.data?.data.length)
+      commit('SET_PRODUCTS', response.data?.data)
+      commit('SET_PRODUCTS_COUNT', response.data?.data.length)
       return response
     },
-    async createProject ({ commit }, payload) {
+    async createProduct ({ commit }, payload) {
       const response = await $http.Api({
         method: 'POST',
-        url: '/projects',
+        url: '/products',
         data: payload
       })
       return response
     },
-    async updateProject ({ commit }, payload) {
+    async updateProduct ({ commit }, payload) {
       const response = await $http.Api({
         method: 'PUT',
-        url: `/projects/${payload.projectId}`,
-        data: payload.project
+        url: `/products/${payload.productId}`,
+        data: payload.product
       })
       return response
     },
-    async deleteProject ({ commit }, payload) {
+    async deleteProduct ({ commit }, payload) {
       const response = await $http.Api({
         method: 'DELETE',
-        url: `/projects/${payload}`
+        url: `/products/${payload}`
       })
       return response
     }
