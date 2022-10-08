@@ -15,21 +15,6 @@
             </div>
           </div>
         </div>
-        <div class="level-right">
-          <div class="level-item">
-            <div class="logo">
-              <a
-                href="https://lotus.me"
-                target="_blank"
-              >
-                <img
-                  src="../../assets/lotus-logo.svg"
-                  alt="lotus.me"
-                >
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </footer>
