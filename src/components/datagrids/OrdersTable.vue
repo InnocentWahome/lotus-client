@@ -85,7 +85,7 @@
         cell-class="is-actions-cell"
       >
         <div
-          v-if="userRole == 'Super-Admin'"
+          v-if="userRole == 'Super-Admin' || userRole == 'Seller'"
           class="buttons is-right no-wrap"
         >
           <router-link
@@ -97,18 +97,6 @@
               size="is-small"
             />
           </router-link>
-          <!-- <b-button
-            v-if="userRole == 'Admin'"
-            type="is-danger"
-            size="is-small"
-            @click.prevent="trashModalOpen(props.row)"
-            @click="trashConfirm(props.row._id)"
-          >
-            <b-icon
-              icon="trash-can"
-              size="is-small"
-            />
-          </b-button> -->
           <b-button
             type="is-danger"
             size="is-small"

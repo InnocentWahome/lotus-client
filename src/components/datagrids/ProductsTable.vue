@@ -66,7 +66,7 @@
         cell-class="is-actions-cell"
       >
         <div
-          v-if="userRole == 'Super-Admin'"
+          v-if="userRole == 'Super-Admin' || userRole == 'Seller'"
           class="buttons is-right no-wrap"
         >
           <router-link
