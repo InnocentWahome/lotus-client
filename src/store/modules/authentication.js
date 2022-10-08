@@ -79,7 +79,8 @@ export default {
         url: '/login',
         data: payload
       })
-      commit('SET_ACCESS_TOKEN', response.data.authToken)
+      console.log('data', response.data)
+      commit('SET_ACCESS_TOKEN', response.data.data.token)
       commit('SET_USER_ID', response.data.data._id)
       commit('SET_FIRST_NAME', response.data.data.firstName)
       commit('SET_PHONE_NUMBER', response.data.data.phoneNumber)

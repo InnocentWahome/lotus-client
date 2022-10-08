@@ -29,7 +29,7 @@ export default {
     async getAllProducts ({ commit }) {
       const response = await $http.Api({
         method: 'GET',
-        url: '/products'
+        url: '/product'
       })
       commit('SET_PRODUCTS', response.data?.data)
       commit('SET_PRODUCTS_COUNT', response.data?.data.length)
@@ -38,7 +38,7 @@ export default {
     async createProduct ({ commit }, payload) {
       const response = await $http.Api({
         method: 'POST',
-        url: '/products',
+        url: '/product',
         data: payload
       })
       return response
@@ -46,7 +46,7 @@ export default {
     async updateProduct ({ commit }, payload) {
       const response = await $http.Api({
         method: 'PUT',
-        url: `/products/${payload.productId}`,
+        url: `/product/${payload.productId}`,
         data: payload.product
       })
       return response
@@ -54,7 +54,7 @@ export default {
     async deleteProduct ({ commit }, payload) {
       const response = await $http.Api({
         method: 'DELETE',
-        url: `/products/${payload}`
+        url: `/product/${payload}`
       })
       return response
     }

@@ -12,7 +12,7 @@
       :checked-rows.sync="checkedRows"
       :paginated="paginated"
       :per-page="perPage"
-      :data="projects"
+      :data="products"
       default-sort="name"
       striped
       hoverable
@@ -23,7 +23,7 @@
       >
         <div class="image">
           <img
-            :src="props.row.avatar"
+            :src="props.row.image"
             class="is-rounded"
           >
         </div>
@@ -46,82 +46,20 @@
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Category"
-        field="category"
+        label="Quantity"
+        field="quantity"
         sortable
       >
-        {{ props.row.category }}
+        {{ props.row.quantity }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Status"
-        field="status"
+        label="Price"
+        field="price"
         sortable
       >
-        {{ props.row.status }}
+        {{ props.row.price }}
       </b-table-column>
-      <b-table-column
-        v-slot="props"
-        label="Leader"
-        field="leader"
-        sortable
-      >
-        {{ props.row.leader }}
-      </b-table-column>
-      <b-table-column
-        v-slot="props"
-        label="Team"
-        field="team"
-        sortable
-      >
-        {{ props.row.team }}
-      </b-table-column>
-      <b-table-column
-        v-slot="props"
-        cell-class="is-progress-col"
-        label="Progress"
-        field="progress"
-        sortable
-      >
-        <progress
-          class="progress is-small is-info"
-          :value="props.row.progress"
-          max="100"
-        >
-          {{ props.row.progress }}
-        </progress>
-      </b-table-column>
-      <b-table-column
-        v-slot="props"
-        custom-key="actions"
-        cell-class="is-actions-cell"
-      >
-        <div
-          v-if="userRole == 'Admin'"
-          class="buttons is-right no-wrap"
-        >
-          <router-link
-            :to="{name:'project.edit', params: {id: props.row._id}}"
-            class="button is-small is-info"
-          >
-            <b-icon
-              icon="account-edit"
-              size="is-small"
-            />
-          </router-link>
-          <b-button
-            type="is-danger"
-            size="is-small"
-            @click="deleteItem(props.row)"
-          >
-            <b-icon
-              icon="trash-can"
-              size="is-small"
-            />
-          </b-button>
-        </div>
-      </b-table-column>
-
       <section
         slot="empty"
         class="section"
@@ -167,20 +105,20 @@ export default defineComponent({
 
   computed: {
     paginated () {
-      return this.$store.state.projects.projects.length > this.perPage
+      return this.$store.state.products.products.length > this.perPage
     },
 
     ...mapState({
-      projects: state => state.projects.projects
+      products: state => state.products.products
     })
 
   },
   created () {
-    this.getProjects()
+    this.getProducts()
   },
   methods: {
-    getProjects () {
-      this.$store.dispatch('projects/getAllProjects')
+    getProducts () {
+      this.$store.dispatch('products/getAllProducts')
         .then((response) => {
           console.log(response)
         })
@@ -192,7 +130,7 @@ export default defineComponent({
     },
     trashConfirm (id) {
       console.log(id)
-      this.$store.dispatch('projects/deleteProject', id)
+      this.$store.dispatch('products/deleteProduct', id)
       this.$buefy.snackbar.open({
         message: 'Deleted Project',
         queue: true
@@ -200,12 +138,12 @@ export default defineComponent({
       this.isModalActive = false
     },
     deleteItem (obj) {
-      this.$store.dispatch('projects/deleteProject', obj._id)
+      this.$store.dispatch('products/deleteProduct', obj._id)
       this.$buefy.snackbar.open({
         message: 'Deleted Project ' + obj.name,
         queue: true
       })
-      this.getProjects()
+      this.getProducts()
     },
     trashCancel () {
       this.isModalActive = false
