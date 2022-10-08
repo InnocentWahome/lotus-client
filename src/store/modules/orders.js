@@ -5,48 +5,48 @@ export default {
   namespaced: true,
 
   state: {
-    tasks: [],
-    tasksCount: ''
+    orders: [],
+    ordersCount: ''
   },
   getters: {},
   mutations: {
-    SET_TASKS (state, payload) {
-      state.tasks = payload
+    SET_ORDERS (state, payload) {
+      state.orders = payload
     },
-    SET_TASKS_COUNT (state, payload) {
-      state.tasksCount = payload
+    SET_ORDERS_COUNT (state, payload) {
+      state.ordersCount = payload
     }
   },
   actions: {
-    async getAllTasks ({ commit }) {
+    async getAllOrders ({ commit }) {
       const response = await $http.Api({
         method: 'GET',
-        url: '/tasks'
+        url: '/orders'
       })
-      commit('SET_TASKS', response.data?.data)
-      commit('SET_TASKS_COUNT', response.data?.data.length)
+      commit('SET_ORDERS', response.data?.data)
+      commit('SET_ORDERS_COUNT', response.data?.data.length)
     },
-    async createTasks ({ commit }, payload) {
+    async createOrder ({ commit }, payload) {
       const response = await $http.Api({
         method: 'POST',
-        url: '/tasks',
+        url: '/orders',
         data: payload
       })
       return response
     },
-    async updateTask ({ commit }, payload) {
+    async updateOrder ({ commit }, payload) {
       const response = await $http.Api({
         method: 'PUT',
-        url: `/tasks/${payload.taskId}`,
-        data: payload.task
+        url: `/orders/${payload.orderId}`,
+        data: payload.order
       })
       return response
     },
-    async deleteTask ({ commit }, payload) {
+    async deleteOrder ({ commit }, payload) {
       const response = await $http.Api({
         method: 'DELETE',
-        url: `/tasks/${payload}`,
-        data: payload.task
+        url: `/orders/${payload}`,
+        data: payload.order
       })
       return response
     }
