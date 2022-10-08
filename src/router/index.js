@@ -60,6 +60,36 @@ const routes = [
       }
     },
     {
+      path: 'users',
+      name: 'Users',
+      component: () =>
+        import(
+          /* webpackChunkName: "pages" */
+          '../views/pages/Users/Index.vue'
+        ),
+      children: [{
+        path: '',
+        name: 'LisUsers',
+        component: () =>
+          import(
+            /* webpackChunkName: "pages" */
+            '../views/pages/Users/ListUsers.vue'
+          )
+      },
+      {
+        path: ':userId',
+        name: 'ViewUser',
+        component: () =>
+          import(
+            /* webpackChunkName: "pages" */
+            '../views/pages/Users/ViewUser.vue'
+          )
+      }],
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: 'orders',
       name: 'Orders',
       component: () =>

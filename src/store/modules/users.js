@@ -4,46 +4,46 @@ export default {
   namespaced: true,
 
   state: {
-    employees: [],
-    employeesCount: ''
+    users: [],
+    usersCount: ''
   },
   getters: {},
   mutations: {
-    SET_EMPLOYEES (state, payload) {
-      state.employees = payload
+    SET_USERS (state, payload) {
+      state.users = payload
     },
-    SET_EMPLOYEES_COUNT (state, payload) {
-      state.employeesCount = payload
+    SET_USERS_COUNT (state, payload) {
+      state.usersCount = payload
     }
   },
   actions: {
-    async getAllEmployees ({ commit }, state) {
-      const response = await $http.Api({
+    async getAllUsers ({ commit }, state) {
+      const response = await $http.Authentication({
         method: 'GET',
         url: '/users'
       })
-      commit('SET_EMPLOYEES', response.data?.data)
-      commit('SET_EMPLOYEES_COUNT', response.data?.data.length)
+      commit('SET_USERS', response.data?.data)
+      commit('SET_USERS_COUNT', response.data?.data.length)
       return response
     },
-    async createEmployee ({ commit }, payload) {
-      const response = await $http.Api({
+    async createUser ({ commit }, payload) {
+      const response = await $http.Authentication({
         method: 'POST',
         url: '/users',
         data: payload
       })
       return response
     },
-    async updateEmployee ({ commit }, payload) {
-      const response = await $http.Api({
+    async updateUser ({ commit }, payload) {
+      const response = await $http.Authentication({
         method: 'PUT',
-        url: `/users/${payload.employeeId}`,
-        data: payload.employee
+        url: `/users/${payload.userId}`,
+        data: payload.user
       })
       return response
     },
-    async deleteEmployee ({ commit }, payload) {
-      const response = await $http.Api({
+    async deleteUser ({ commit }, payload) {
+      const response = await $http.Authentication({
         method: 'DELETE',
         url: `/users/${payload}`
       })

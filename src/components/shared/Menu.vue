@@ -107,7 +107,7 @@
           <b-menu-list>
             <b-menu-item
               label="Products"
-              icon="link"
+              icon="square-edit-outline"
               href="/dashboard/products"
             />
           </b-menu-list>
@@ -129,7 +129,7 @@
             <b-menu-item
               label="Users"
               icon="link"
-              href="/dashboard/orders"
+              href="/dashboard/users"
             />
           </b-menu-list>
           <!-- </b-menu-list> -->
