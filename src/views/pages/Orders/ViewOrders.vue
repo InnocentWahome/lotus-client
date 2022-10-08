@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>View Project</h2>
+    <h2>View Order</h2>
     <title-bar :title-stack="titleStack" />
     <hero-bar>
       {{ heroTitle }}
@@ -15,7 +15,7 @@
     <section class="section is-main-section">
       <notification class="is-info">
         <div>
-          <span><b>Quick tip:</b> To mark a project as completely done, use the "Terminated" option</span>
+          <span><b>Quick tip:</b> To mark a order as completely done, use the "Terminated" option</span>
         </div>
       </notification>
       <tiles>
@@ -37,7 +37,7 @@
             </b-field>
             <hr>
             <b-field
-              label="Project logo"
+              label="Order logo"
               horizontal
             >
               <file-picker type="is-info" />
@@ -45,17 +45,17 @@
             <hr>
             <b-field
               label="Name"
-              message="Project name"
+              message="Order name"
               horizontal
             >
               <b-input
                 v-model="form.name"
-                placeholder="e.g. Project A"
+                placeholder="e.g. Order A"
               />
             </b-field>
             <b-field
               label="Description"
-              message="Project description"
+              message="Order description"
               horizontal
             >
               <b-input
@@ -166,7 +166,7 @@
         </card-component>
         <card-component
           v-if="isProfileExists"
-          title="Project Profile"
+          title="Order Profile"
           icon="account"
           class="tile is-child"
         >
@@ -251,7 +251,7 @@ import UserAvatar from '@/components/BaseUserAvatar.vue'
 import Notification from '@/components/BaseNotification.vue'
 
 export default defineComponent({
-  name: 'ProjectsForm',
+  name: 'ViewOrder',
   components: {
     UserAvatar,
     FilePicker,
@@ -288,26 +288,26 @@ export default defineComponent({
   computed: {
     titleStack () {
       return [
-        'Projects',
-        this.isProfileExists ? this.form.name : 'New Project'
+        'Orders',
+        this.isProfileExists ? this.form.name : 'New Order'
       ]
     },
     heroTitle () {
-      return this.isProfileExists ? this.form.name : 'Create Project'
+      return this.isProfileExists ? this.form.name : 'Create Order'
     },
     heroRouterLinkTo () {
       return this.isProfileExists
-        ? { name: 'project.new' }
-        : { name: 'Projects' }
+        ? { name: 'order.new' }
+        : { name: 'orders' }
     },
     heroRouterLinkLabel () {
-      return this.isProfileExists ? 'New Project' : 'Dashboard'
+      return this.isProfileExists ? 'New Order' : 'Dashboard'
     },
     formCardTitle () {
-      return this.isProfileExists ? 'Edit Project' : 'Create Project'
+      return this.isProfileExists ? 'Edit Order' : 'Create Order'
     },
     ...mapState({
-      projects: (state) => state.projects.projects
+      orders: (state) => state.orders.orders
     })
   },
   watch: {
@@ -347,8 +347,8 @@ export default defineComponent({
   methods: {
     getData () {
       if (this.$route.params.id) {
-        const item = this.projects.find(
-          (project) => project._id === this.$route.params.id
+        const item = this.orders.find(
+          (order) => order._id === this.$route.params.id
         )
 
         if (item) {
@@ -367,14 +367,14 @@ export default defineComponent({
           // this.createdReadable = new Date(item.created_mm_dd_yyyy).toLocaleDateString()
         }
       } else {
-        this.$router.push({ name: 'project.new' })
+        this.$router.push({ name: 'order.new' })
       }
     },
     dateInput (v) {
       this.createdReadable = new Date(v).toLocaleDateString()
     },
     submit () {
-      const newProject = {
+      const newOrder = {
         name: this.form.name,
         description: this.form.description,
         category: this.form.category,
@@ -384,20 +384,20 @@ export default defineComponent({
         endDate: this.form.endDate,
         progress: this.form.progress
       }
-      const updateProject = {
-        projectId: this.$route.params.id,
-        project: this.form
+      const updateOrder = {
+        orderId: this.$route.params.id,
+        order: this.form
       }
       if (this.$route.params.id) {
         this.$store
-          .dispatch('projects/updateProject', updateProject)
+          .dispatch('orders/updateOrder', updateOrder)
           .then((response) => {
             if (response.status === 200) {
               this.isLoading = true
               setTimeout(() => {
                 this.isLoading = false
                 this.$buefy.snackbar.open({
-                  message: 'Successfully updated the project!',
+                  message: 'Successfully updated the order!',
                   queue: false
                 })
               }, 750)
@@ -406,7 +406,7 @@ export default defineComponent({
               setTimeout(() => {
                 this.isLoading = false
                 this.$buefy.snackbar.open({
-                  message: 'Failed to update the project!',
+                  message: 'Failed to update the order!',
                   queue: false
                 })
               }, 750)
@@ -414,7 +414,7 @@ export default defineComponent({
           })
       } else {
         this.$store
-          .dispatch('projects/createProject', newProject)
+          .dispatch('orders/createOrder', newOrder)
           .then((response) => {
             console.log(response)
             if (response.status === 200) {
@@ -422,7 +422,7 @@ export default defineComponent({
               setTimeout(() => {
                 this.isLoading = false
                 this.$buefy.snackbar.open({
-                  message: 'Successfully created a project!',
+                  message: 'Successfully created a order!',
                   queue: false
                 })
               }, 750)
