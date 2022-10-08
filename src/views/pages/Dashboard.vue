@@ -100,12 +100,12 @@
           </card-component>
         </div>
       </div>
-      <card-component
+      <!-- <card-component
         title="Have a quick peek at the tasks"
         class="has-table has-mobile-sort-spaced"
       >
         <tasks-table />
-      </card-component>
+      </card-component> -->
       <card-component
         title="Yearly Productivity"
         icon="finance"
@@ -135,13 +135,13 @@ import CardComponent from '@/components/BaseCardComponent.vue'
 import LineChart from '@/components/charts/LineChart.vue'
 import BarChart from '@/components/charts/BarChart.vue'
 import PieChart from '@/components/charts/PieChart.vue'
-import TasksTable from '@/components/datagrids/TasksTable.vue'
+// import TasksTable from '@/components/datagrids/TasksTable.vue'
 import Notification from '@/components/BaseNotification.vue'
 
 export default defineComponent({
   name: 'Home',
   components: {
-    TasksTable,
+    // TasksTable,
     LineChart,
     CardComponent,
     CardWidget,

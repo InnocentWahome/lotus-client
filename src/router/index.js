@@ -30,29 +30,29 @@ const routes = [
       }
     },
     {
-      path: 'employees',
-      name: 'Employees',
+      path: 'products',
+      name: 'Products',
       component: () =>
         import(
           /* webpackChunkName: "pages" */
-          '../views/pages/Employees/Index.vue'
+          '../views/pages/Products/Index.vue'
         ),
       children: [{
         path: '',
-        name: 'ListEmployees',
+        name: 'ListProducts',
         component: () =>
           import(
             /* webpackChunkName: "pages" */
-            '../views/pages/Employees/ListEmployees.vue'
+            '../views/pages/Products/ListProducts.vue'
           )
       },
       {
-        path: ':employeeId',
-        name: 'ViewEmployee',
+        path: ':productId',
+        name: 'ViewProduct',
         component: () =>
           import(
             /* webpackChunkName: "pages" */
-            '../views/pages/Employees/ViewEmployee.vue'
+            '../views/pages/Products/ViewProduct.vue'
           )
       }],
       meta: {
@@ -60,29 +60,29 @@ const routes = [
       }
     },
     {
-      path: 'projects',
-      name: 'Projects',
+      path: 'orders',
+      name: 'Orders',
       component: () =>
         import(
           /* webpackChunkName: "pages" */
-          '../views/pages/Projects/Index.vue'
+          '../views/pages/Orders/Index.vue'
         ),
       children: [{
         path: '',
-        name: 'ListProjects',
+        name: 'ListOrders',
         component: () =>
           import(
             /* webpackChunkName: "pages" */
-            '../views/pages/Projects/ListProjects.vue'
+            '../views/pages/Orders/ListOrders.vue'
           )
       },
       {
-        path: ':projectId',
-        name: 'ViewProject',
+        path: ':orderId',
+        name: 'ViewOrders',
         component: () =>
           import(
             /* webpackChunkName: "pages" */
-            '../views/pages/Projects/ViewProject.vue'
+            '../views/pages/Orders/ViewOrders.vue'
           )
       }],
       meta: {
@@ -91,67 +91,33 @@ const routes = [
 
     },
     {
-      path: 'tasks',
-      name: 'Tasks',
+      path: 'deliveries',
+      name: 'Deliveries',
       component: () =>
         import(
           /* webpackChunkName: "pages" */
-          '../views/pages/Tasks/Index.vue'
+          '../views/pages/Deliveries/Index.vue'
         ),
       children: [{
 
         path: '',
-        name: 'ListTasks',
+        name: 'ListDeliveries',
         component: () =>
           import(
             /* webpackChunkName: "pages" */
-            '../views/pages/Tasks/ListTasks.vue'
+            '../views/pages/Deliveries/ListDeliveries.vue'
           )
       },
       {
-        path: ':taskId',
-        name: 'ViewTask',
+        path: ':deliveriesId',
+        name: 'ViewDeliveries',
         component: () =>
           import(
             /* webpackChunkName: "pages" */
-            '../views/pages/Tasks/ViewTask.vue'
+            '../views/pages/Deliveries/ViewDeliveries.vue'
           )
 
       }],
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: 'teams',
-      name: 'Teams',
-      component: () =>
-        import(
-          /* webpackChunkName: "pages" */
-          '../views/pages/Teams/Index.vue'
-        ),
-      children: [
-        {
-
-          path: '',
-          name: 'ListTeams',
-          component: () =>
-            import(
-              /* webpackChunkName: "pages" */
-              '../views/pages/Teams/ListTeams.vue'
-            )
-        },
-        {
-          path: ':teamId',
-          name: 'ViewTeam',
-          component: () =>
-            import(
-              /* webpackChunkName: "pages" */
-              '../views/pages/Teams/ViewTeam.vue'
-            )
-
-        }
-      ],
       meta: {
         requiresAuth: true
       }
@@ -296,20 +262,20 @@ const routes = [
           '@/components/forms/TeamForm.vue'
         )
     },
-    {
-      meta: {
-        title: 'Edit Task',
-        requiresAuth: true
-      },
-      path: '/task/edit/:id',
-      name: 'task.edit',
-      component: () =>
-        import(
-        /* webpackChunkName: "task-form" */
-          '@/components/forms/TasksForm.vue'
-        ),
-      props: true
-    },
+    // {
+    //   meta: {
+    //     title: 'Edit Task',
+    //     requiresAuth: true
+    //   },
+    //   path: '/task/edit/:id',
+    //   name: 'task.edit',
+    //   component: () =>
+    //     import(
+    //     /* webpackChunkName: "task-form" */
+    //       '@/components/forms/TasksForm.vue'
+    //     ),
+    //   props: true
+    // },
     {
       meta: {
         title: 'New Task',
