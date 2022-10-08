@@ -8,7 +8,7 @@
         <div class="level-left">
           <div class="level-item">
             <div class="footer-copyright">
-              <b>&copy; {{ year }}, kaziflow.me</b>. <a
+              <b>&copy; {{ year }}, lotus.me</b>. <a
                 href="#"
                 target="_blank"
               >GitHub</a>
@@ -19,12 +19,12 @@
           <div class="level-item">
             <div class="logo">
               <a
-                href="https://kaziflow.me"
+                href="https://lotus.me"
                 target="_blank"
               >
                 <img
-                  src="../../assets/kaziflow-logo.svg"
-                  alt="kaziflow.me"
+                  src="../../assets/lotus-logo.svg"
+                  alt="lotus.me"
                 >
               </a>
             </div>

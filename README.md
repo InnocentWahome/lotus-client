@@ -1,4 +1,4 @@
-# Kaziflow - (client)
+# Lotus - (client)
 
 > Task / Team / Project / Employee tracking tool
 
@@ -6,7 +6,7 @@
 
 ```bash
 ### Clone the git repository
-git clone https://github.com/InnocentWahome/kaziflow-client.git
+git clone https://github.com/InnocentWahome/lotus-client.git
 
 ### Setup environment variables
 cp .env.example .env
@@ -26,7 +26,7 @@ npm start
 - [Prudence Wanjau](mailto: innocentwahome@gmail.com)
 
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/40e3b3f3-adb4-4ed1-8a70-ab9db1444abc/deploy-status)](https://app.netlify.com/sites/kaziflow/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/40e3b3f3-adb4-4ed1-8a70-ab9db1444abc/deploy-status)](https://app.netlify.com/sites/lotus/deploys)
 
 ## Getting Started
 
@@ -42,7 +42,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 First clone the repository from github by running the following command:
 
-```git clone https://github.com/InnocentWahome/kaziflow-client.git```
+```git clone https://github.com/InnocentWahome/lotus-client.git```
 
 Install all the required modules:
 

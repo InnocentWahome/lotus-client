@@ -1,5 +1,5 @@
 {
-  "name": "kaziflow-vue-bulma-dashboard",
+  "name": "lotus-vue-bulma-dashboard",
   "version": "2.3.0",
   "scripts": {
     "dev": "vite --host",

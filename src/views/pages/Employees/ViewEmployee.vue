@@ -72,7 +72,7 @@
             >
               <b-input
                 v-model="form.email"
-                placeholder="e.g. johndoe@kaziflow.com"
+                placeholder="e.g. johndoe@lotus.com"
                 required
               />
             </b-field>

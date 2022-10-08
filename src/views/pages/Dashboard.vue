@@ -17,7 +17,7 @@
 
         <a
           slot="right"
-          href="https://github.com/InnocentWahome/kaziflow-client.git"
+          href="https://github.com/InnocentWahome/lotus-client.git"
           target="_blank"
           class="button is-white is-small"
         >
