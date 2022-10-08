@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>View Task</h2>
+    <h2>View Delivery</h2>
     <title-bar :title-stack="titleStack" />
     <hero-bar>
       {{ heroTitle }}
@@ -15,7 +15,7 @@
     <section class="section is-main-section">
       <notification class="is-info">
         <div>
-          <span><b> can now create their own tasks!</b></span>
+          <span><b> can now create their own delivery!</b></span>
         </div>
       </notification>
       <tiles>
@@ -38,7 +38,7 @@
             <hr>
             <b-field
               label="Name"
-              message="Task name"
+              message="Delivery name"
               horizontal
             >
               <b-input
@@ -49,7 +49,7 @@
             </b-field>
             <b-field
               label="Description"
-              message="Description of the task"
+              message="Description of the Delivery"
               horizontal
             >
               <b-input
@@ -60,7 +60,7 @@
             </b-field>
             <b-field
               label="Project"
-              message="Project this task belongs to"
+              message="Project this Delivery belongs to"
               horizontal
             >
               <b-input
@@ -71,7 +71,7 @@
             </b-field>
             <b-field
               label="Reporter"
-              message="Creator the task"
+              message="Creator the delivery"
               horizontal
             >
               <b-input
@@ -82,7 +82,7 @@
             </b-field>
             <b-field
               label="Assignee"
-              message="Individual working on the task"
+              message="Individual working on the delivery"
               horizontal
             >
               <b-input
@@ -93,7 +93,7 @@
             </b-field>
             <b-field
               label="Status"
-              message="Task update"
+              message="Delivery update"
               horizontal
             >
               <div class="select">
@@ -162,7 +162,7 @@
 
         <card-component
           v-if="isProfileExists"
-          title="Task Overview"
+          title="Delivery Overview"
           icon="account"
           class="tile is-child"
         >
@@ -248,7 +248,7 @@ import UserAvatar from '@/components/BaseUserAvatar.vue'
 import Notification from '@/components/BaseNotification.vue'
 
 export default defineComponent({
-  name: 'TasksForm',
+  name: 'ViewDeliveries',
   components: {
     UserAvatar,
     // FilePicker,
@@ -286,24 +286,24 @@ export default defineComponent({
   computed: {
     titleStack () {
       return [
-        'Tasks',
-        this.isProfileExists ? this.form.name : 'New Task'
+        'Deliveries',
+        this.isProfileExists ? this.form.name : 'New Deliveries'
       ]
     },
     heroTitle () {
-      return this.isProfileExists ? this.form.name : 'Create Task'
+      return this.isProfileExists ? this.form.name : 'Create Deliveries'
     },
     heroRouterLinkTo () {
-      return this.isProfileExists ? { name: 'task.new' } : { name: 'Tasks' }
+      return this.isProfileExists ? { name: 'delivery.new' } : { name: 'Deliveries' }
     },
     heroRouterLinkLabel () {
-      return this.isProfileExists ? 'New Task' : 'Dashboard'
+      return this.isProfileExists ? 'New Delivery' : 'Dashboard'
     },
     formCardTitle () {
-      return this.isProfileExists ? 'Edit Task' : 'Create Task'
+      return this.isProfileExists ? 'Edit Delivery' : 'Create Delivery'
     },
     ...mapState({
-      tasks: state => state.tasks.tasks
+      deliveries: state => state.deliveries.deliveries
     })
   },
   watch: {
@@ -346,7 +346,7 @@ export default defineComponent({
   methods: {
     getData () {
       if (this.$route.params.id) {
-        const item = this.tasks.find((task) => task._id === this.$route.params.id)
+        const item = this.deliveries.find((delivery) => delivery._id === this.$route.params.id)
 
         if (item) {
           this.isProfileExists = true
@@ -363,14 +363,14 @@ export default defineComponent({
           // this.createdReadable = new Date(item.created_mm_dd_yyyy).toLocaleDateString()
         }
       } else {
-        this.$router.push({ name: 'task.new' })
+        this.$router.push({ name: 'delivery.new' })
       }
     },
     dateInput (v) {
       this.createdReadable = new Date(v).toLocaleDateString()
     },
     submit () {
-      const taskData = {
+      const deliveryData = {
         name: this.form.name,
         description: this.form.description,
         reporter: this.form.reporter,
@@ -380,20 +380,20 @@ export default defineComponent({
         progress: this.form.progress,
         dueDate: this.form.dueDate
       }
-      const updateTask = {
-        taskId: this.$route.params.id,
-        task: this.form
+      const updateDelivery = {
+        deliveryId: this.$route.params.id,
+        delivery: this.form
       }
       if (this.$route.params.id) {
-        this.$store.dispatch('tasks/updateTask', updateTask)
+        this.$store.dispatch('deliveries/updateDelivery', updateDelivery)
         this.$buefy.snackbar.open({
-          message: 'Successfully updated the task',
+          message: 'Successfully updated the delivery',
           queue: true
         })
       } else {
-        this.$store.dispatch('tasks/createTasks', taskData)
+        this.$store.dispatch('deliveries/createDelivery', deliveryData)
         this.$buefy.snackbar.open({
-          message: 'Successfully created the task',
+          message: 'Successfully created the delivery',
           queue: true
         })
       }

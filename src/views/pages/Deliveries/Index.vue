@@ -8,7 +8,7 @@
 import { defineComponent } from '@vue/composition-api'
 import PageLayout from '../../../layouts/PageLayout.vue'
 export default defineComponent({
-  name: 'TasksHome',
+  name: 'DeliveriesHome',
   components: {
     PageLayout
   }
