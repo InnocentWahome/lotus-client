@@ -21,7 +21,7 @@ export default {
     async getAllOrders ({ commit }) {
       const response = await $http.Api({
         method: 'GET',
-        url: '/orders'
+        url: '/order'
       })
       commit('SET_ORDERS', response.data?.data)
       commit('SET_ORDERS_COUNT', response.data?.data.length)
@@ -29,7 +29,7 @@ export default {
     async createOrder ({ commit }, payload) {
       const response = await $http.Api({
         method: 'POST',
-        url: '/orders',
+        url: '/order',
         data: payload
       })
       return response
@@ -37,7 +37,7 @@ export default {
     async updateOrder ({ commit }, payload) {
       const response = await $http.Api({
         method: 'PUT',
-        url: `/orders/${payload.orderId}`,
+        url: `/order/${payload.orderId}`,
         data: payload.order
       })
       return response
@@ -45,7 +45,7 @@ export default {
     async deleteOrder ({ commit }, payload) {
       const response = await $http.Api({
         method: 'DELETE',
-        url: `/orders/${payload}`,
+        url: `/order/${payload}`,
         data: payload.order
       })
       return response

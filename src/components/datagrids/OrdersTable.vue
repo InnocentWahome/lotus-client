@@ -10,94 +10,74 @@
       :checked-rows.sync="checkedRows"
       :paginated="paginated"
       :per-page="perPage"
-      :data="tasks"
+      :data="orders"
       default-sort="name"
       striped
       hoverable
     >
       <b-table-column
         v-slot="props"
-        cell-class="has-no-head-mobile is-image-cell"
-      >
-        <div class="image">
-          <img
-            :src="props.row.avatar"
-            class="is-rounded"
-          >
-        </div>
-      </b-table-column>
-      <b-table-column
-        v-slot="props"
-        label="Name"
-        field="company"
+        label="ID"
+        field="id"
         sortable
       >
-        {{ props.row.name }}
+        {{ props.row.id }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Description"
-        field="description"
+        label="Total Cost"
+        field="cost"
         sortable
       >
-        {{ props.row.description }}
+        {{ props.row.cost }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Project"
-        field="project"
+        label="Product ID"
+        field="product_id"
         sortable
       >
-        {{ props.row.project }}
+        {{ props.row.product_id }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Reporter"
-        field="reporter"
+        label="Product Quantity"
+        field="quantity"
         sortable
       >
-        {{ props.row.reporter }}
+        {{ props.row.quantity }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Assignee"
-        field="assignee"
+        label="User"
+        field="userId"
         sortable
       >
-        {{ props.row.assignee }}
+        {{ props.row.userId }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Status"
-        field="status"
+        label="Payment Status"
+        field="payment_status"
         sortable
       >
-        {{ props.row.status }}
+        {{ props.row.payment_status }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        cell-class="is-progress-col"
-        label="Progress"
-        field="progress"
+        label="Dispatch Status"
+        field="dispatch_status"
         sortable
       >
-        <progress
-          class="progress is-small is-info"
-          :value="props.row.progress"
-          max="100"
-        >
-          {{ props.row.progress }}
-        </progress>
+        {{ props.row.dispatch_status }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Due dates"
+        label="Delivery Status"
+        field="delivery_status"
+        sortable
       >
-        <small
-          class="has-text-grey is-abbr-like"
-          :title="props.row.dueDate"
-        >{{ props.row.dueDate.split("T")[0]
-        }}</small>
+        {{ props.row.delivery_status }}
       </b-table-column>
       <b-table-column
         v-slot="props"
@@ -106,7 +86,7 @@
       >
         <div class="buttons is-right no-wrap">
           <router-link
-            :to="{ name: 'task.edit', params: { id: props.row._id } }"
+            :to="{ name: 'order.edit', params: { id: props.row._id } }"
             class="button is-small is-info"
           >
             <b-icon
@@ -163,7 +143,7 @@ import { mapState } from 'vuex'
 import ModalBox from '@/components/BaseModalBox.vue'
 
 export default defineComponent({
-  name: 'TasksTable',
+  name: 'OrdersTable',
   components: { ModalBox },
   props: {
     checkable: Boolean,
@@ -184,20 +164,20 @@ export default defineComponent({
 
   computed: {
     paginated () {
-      return this.$store.state.tasks.tasks.length > this.perPage
+      return this.$store.state.orders.orders.length > this.perPage
     },
 
     ...mapState({
-      tasks: state => state.tasks.tasks
+      orders: state => state.orders.orders
     })
 
   },
   created () {
-    this.getTasks()
+    this.getOrders()
   },
   methods: {
-    getTasks () {
-      this.$store.dispatch('tasks/getAllTasks')
+    getOrders () {
+      this.$store.dispatch('orders/getAllOrders')
     },
     trashModalOpen (obj) {
       this.trashObject = obj
@@ -205,7 +185,7 @@ export default defineComponent({
     },
     trashConfirm (id) {
       this.isModalActive = false
-      this.$store.dispatch('tasks/deleteTask', id)
+      this.$store.dispatch('orders/deleteOrder', id)
       this.$buefy.snackbar.open({
         message: 'Confirmed',
         queue: false
@@ -215,12 +195,12 @@ export default defineComponent({
       this.isModalActive = false
     },
     deleteItem (obj) {
-      this.$store.dispatch('tasks/deleteTask', obj._id)
+      this.$store.dispatch('orders/deleteOrder', obj._id)
       this.$buefy.snackbar.open({
-        message: 'Deleted Task ' + obj.name,
+        message: 'Deleted order ' + obj.name,
         queue: true
       })
-      this.getTasks()
+      this.getOrders()
     }
   }
 })
