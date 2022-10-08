@@ -61,7 +61,7 @@
         field="payment_status"
         sortable
       >
-        {{ props.row.payment_status }}
+        {{ props.row.payment_status > 0 ? " Paid" : "Not Paid" }}
       </b-table-column>
       <b-table-column
         v-slot="props"
@@ -69,7 +69,7 @@
         field="dispatch_status"
         sortable
       >
-        {{ props.row.dispatch_status }}
+        {{ props.row.dispatch_status > 0 ? " Dispatched" : "Not Dispatched" }}
       </b-table-column>
       <b-table-column
         v-slot="props"
@@ -77,7 +77,7 @@
         field="delivery_status"
         sortable
       >
-        {{ props.row.delivery_status }}
+        {{ props.row.delivery_status > 0 ? " Delivered" : "Not Delivered" }}
       </b-table-column>
       <b-table-column
         v-slot="props"

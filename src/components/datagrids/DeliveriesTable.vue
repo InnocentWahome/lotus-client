@@ -11,71 +11,58 @@
       :checked-rows.sync="checkedRows"
       :paginated="paginated"
       :per-page="perPage"
-      :data="employees"
+      :data="deliveries"
       default-sort="name"
       striped
       hoverable
     >
       <b-table-column
         v-slot="props"
-        cell-class="has-no-head-mobile is-image-cell"
+        label="ID"
+        field="id"
+        sortable
       >
-        <div class="image">
-          <img
-            :src="props.row.avatar"
-            class="is-rounded"
-          >
-        </div>
+        {{ props.row.id }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="First Name"
-        field="firstName"
+        label="Order ID"
+        field="order_id"
         sortable
       >
-        {{ props.row.firstName }}
+        {{ props.row.order_id }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Last Name"
-        field="lastName"
+        label="User ID"
+        field="user_id"
         sortable
       >
-        {{ props.row.lastName }}
+        {{ props.row.user_id }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Email"
-        field="email"
+        label="Payment Status"
+        field="payment_status"
         sortable
       >
-        {{ props.row.email }}
+        {{ props.row.payment_status > 0 ? " Paid" : "Not Paid" }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Phone Number"
-        field="phoneNumber"
-        maxlength="10"
-        minlength="7"
+        label="Dispatch Status"
+        field="dispatch_status"
         sortable
       >
-        {{ props.row.phoneNumber }}
+        {{ props.row.dispatch_status > 0 ? " Dispatched" : "Not Dispatched" }}
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Role"
-        field="role"
+        label="Delivery Status"
+        field="delivery_status"
         sortable
       >
-        {{ props.row.role }}
-      </b-table-column>
-      <b-table-column
-        v-slot="props"
-        label="Member Since"
-        field="createdAt"
-        sortable
-      >
-        {{ props.row.createdAt }}
+        {{ props.row.delivery_status > 0 ? " Delivered" : "Not Delivered" }}
       </b-table-column>
       <b-table-column
         v-slot="props"
@@ -84,7 +71,7 @@
       >
         <div class="buttons is-right no-wrap">
           <router-link
-            :to="{name:'admin-employee.edit', params: {id: props.row._id}}"
+            :to="{name:'admin-deliveries.edit', params: {id: props.row._id}}"
             class="button is-small is-info"
           >
             <b-icon
@@ -129,7 +116,7 @@ import { mapState } from 'vuex'
 import ModalBox from '@/components/BaseModalBox.vue'
 
 export default defineComponent({
-  name: 'EmployeesTable',
+  name: 'DeliveriesTable',
   components: { ModalBox },
   props: {
     checkable: Boolean,
@@ -149,20 +136,20 @@ export default defineComponent({
 
   computed: {
     paginated () {
-      return this.$store.state.employees.employees.length > this.perPage
+      return this.$store.state.deliveries.deliveries.length > this.perPage
     },
 
     ...mapState({
-      employees: state => state.employees.employees
+      deliveries: state => state.deliveries.deliveries
     })
 
   },
   created () {
-    this.getEmployees()
+    this.getDeliveries()
   },
   methods: {
-    getEmployees () {
-      this.$store.dispatch('employees/getAllEmployees')
+    getDeliveries () {
+      this.$store.dispatch('deliveries/getAllDeliveries')
     },
     trashModalOpen (obj) {
       this.trashObject = obj
@@ -180,13 +167,13 @@ export default defineComponent({
       this.isModalActive = false
     },
     deleteItem (obj) {
-      this.$store.dispatch('employees/deleteEmployee', obj._id)
+      this.$store.dispatch('deliveries/deleteDelivery', obj._id)
       this.$buefy.snackbar.open({
-        message: 'Deleted Employee ' + obj.firstName,
+        message: 'Deleted Deliveries ' + obj.firstName,
         queue: true
       })
-      this.$store.dispatch('employees/getAllEmployees')
-      this.getEmployees()
+      this.$store.dispatch('deliveries/getAllDeliveries')
+      this.getDeliveries()
     }
   }
 })
