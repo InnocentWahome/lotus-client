@@ -1,16 +1,12 @@
 <template>
-  <page-layout>
-    <router-view />
-  </page-layout>
+  <router-view />
 </template>
 
 <script>
 import { defineComponent } from '@vue/composition-api'
-import PageLayout from '../../../layouts/PageLayout.vue'
 export default defineComponent({
   name: 'ProductsHome',
   components: {
-    PageLayout
   }
 })
 </script>

@@ -4,17 +4,11 @@
     class="footer"
   >
     <div class="container-fluid">
-      <div class="level">
-        <div class="level-left">
-          <div class="level-item">
-            <div class="footer-copyright">
-              <b>&copy; {{ year }}, lotus.me</b>. <a
-                href="#"
-                target="_blank"
-              >GitHub</a>
-            </div>
-          </div>
-        </div>
+      <div class="footer-copyright has-text-centered">
+        <b>&copy; {{ year }}, lotus.me</b>. <a
+          href="#"
+          target="_blank"
+        >GitHub</a>
       </div>
     </div>
   </footer>

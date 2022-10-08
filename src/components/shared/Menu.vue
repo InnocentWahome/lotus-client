@@ -19,8 +19,8 @@
 
     <div class="mt-2 mb-3 mr-3 ml-6">
       <img
-        src="../../assets/logo.png"
-        width="112"
+        src="../../assets/logo.jpg"
+        width="120"
         height="28"
       >
     </div>
@@ -88,14 +88,13 @@
           /> -->
           <!-- </b-menu-list> -->
           <!-- Profile page -->
-          <!-- <b-menu-list> -->
-          <!-- <b-menu-item
-            v-if="userRole == 'Admin'"
-            label="Profile"
-            icon="link"
-            href="/dashboard/profile"
-          /> -->
-          <!-- </b-menu-list> -->
+          <b-menu-list>
+            <b-menu-item
+              label="Profile"
+              icon="link"
+              href="/dashboard/profile"
+            />
+          </b-menu-list>
           <!-- <b-menu-list>
           <b-menu-item
             v-if="userRole == 'Employee'"
