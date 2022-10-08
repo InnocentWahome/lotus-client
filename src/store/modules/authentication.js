@@ -79,12 +79,22 @@ export default {
         url: '/login',
         data: payload
       })
-      console.log('data', response.data)
       commit('SET_ACCESS_TOKEN', response.data.data.token)
-      commit('SET_USER_ID', response.data.data._id)
-      commit('SET_FIRST_NAME', response.data.data.firstName)
-      commit('SET_PHONE_NUMBER', response.data.data.phoneNumber)
-      commit('SET_LAST_NAME', response.data.data.lastName)
+      return response
+    },
+
+    async getUser ({ commit }, payload, state) {
+      const response = await $http.Authentication({
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        url: '/user'
+      })
+      commit('SET_USER_ID', response.data.data.id)
+      commit('SET_FIRST_NAME', response.data.data.first_name)
+      commit('SET_PHONE_NUMBER', response.data.data.phone_number)
+      commit('SET_LAST_NAME', response.data.data.last_name)
       commit('SET_EMAIL', response.data.data.email)
       commit('SET_ROLE', response.data.data.role)
       commit('SET_PASSWORD', response.data.data.password)

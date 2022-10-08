@@ -84,7 +84,10 @@
         custom-key="actions"
         cell-class="is-actions-cell"
       >
-        <div class="buttons is-right no-wrap">
+        <div
+          v-if="userRole == 'Super-Admin'"
+          class="buttons is-right no-wrap"
+        >
           <router-link
             :to="{ name: 'order.edit', params: { id: props.row._id } }"
             class="button is-small is-info"

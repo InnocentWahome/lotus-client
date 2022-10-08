@@ -60,6 +60,36 @@
       >
         {{ props.row.price }}
       </b-table-column>
+      <b-table-column
+        v-slot="props"
+        custom-key="actions"
+        cell-class="is-actions-cell"
+      >
+        <div
+          v-if="userRole == 'Super-Admin'"
+          class="buttons is-right no-wrap"
+        >
+          <router-link
+            :to="{name:'admin-deliveries.edit', params: {id: props.row._id}}"
+            class="button is-small is-info"
+          >
+            <b-icon
+              icon="account-edit"
+              size="is-small"
+            />
+          </router-link>
+          <b-button
+            type="is-danger"
+            size="is-small"
+            @click="deleteItem(props.row)"
+          >
+            <b-icon
+              icon="trash-can"
+              size="is-small"
+            />
+          </b-button>
+        </div>
+      </b-table-column>
       <section
         slot="empty"
         class="section"

@@ -34,29 +34,29 @@
           class="tile is-child"
           type="is-danger"
           icon="chart-timeline-variant"
-          :number="$store.state.tasks.tasksCount.toString()"
-          label="Tasks"
+          :number="$store.state.products.productsCount.toString()"
+          label="Products"
         />
         <card-widget
           class="tile is-child"
           type="is-primary"
           icon="account-multiple"
-          :number="$store.state.teams.teamsCount.toString()"
-          label="Teams"
+          :number="$store.state.orders.ordersCount.toString()"
+          label="Orders"
         />
         <card-widget
           class="tile is-child"
           type="is-info"
           icon="square-edit-outline"
-          :number="$store.state.projects.projectsCount.toString()"
-          label="Projects"
+          :number="$store.state.deliveries.deliveriesCount.toString()"
+          label="Deliveries"
         />
         <card-widget
           class="tile is-child"
           type="is-secondary"
           icon="account-circle"
-          :number="$store.state.employees.employeesCount.toString()"
-          label="Employees"
+          :number="$store.state.users.usersCount.toString()"
+          label="Users"
         />
       </tiles>
       <div class="columns">
@@ -100,12 +100,6 @@
           </card-component>
         </div>
       </div>
-      <!-- <card-component
-        title="Have a quick peek at the tasks"
-        class="has-table has-mobile-sort-spaced"
-      >
-        <tasks-table />
-      </card-component> -->
       <card-component
         title="Yearly Productivity"
         icon="finance"
@@ -135,13 +129,11 @@ import CardComponent from '@/components/BaseCardComponent.vue'
 import LineChart from '@/components/charts/LineChart.vue'
 import BarChart from '@/components/charts/BarChart.vue'
 import PieChart from '@/components/charts/PieChart.vue'
-// import TasksTable from '@/components/datagrids/TasksTable.vue'
 import Notification from '@/components/BaseNotification.vue'
 
 export default defineComponent({
   name: 'Home',
   components: {
-    // TasksTable,
     LineChart,
     CardComponent,
     CardWidget,
@@ -160,10 +152,6 @@ export default defineComponent({
       lineChartData: null,
       barChartData: chartConfig.barChartData(),
       pieChartData: null,
-      // teamsNumber: this.$store.state.teams.teamsCount,
-      // tasksNumber: this.$store.state.tasks.tasksCount,
-      // employeesNumber: this.$store.state.employees.employeesCount,
-      // projectsNumber: this.$store.state.projects.projectsCount,
       chartOptions: {
         responsive: true,
         maintainAspectRatio: true,
@@ -184,6 +172,7 @@ export default defineComponent({
     }
   },
   async mounted () {
+    this.$store.dispatch('authentication/getUser')
     this.LineChartData()
     this.BarChartData()
     this.PieChartData()
@@ -193,10 +182,10 @@ export default defineComponent({
     })
   },
   created () {
-    this.$store.dispatch('teams/getAllTeams')
-    this.$store.dispatch('tasks/getAllTasks')
-    this.$store.dispatch('projects/getAllProjects')
-    this.$store.dispatch('employees/getAllEmployees')
+    this.$store.dispatch('products/getAllProducts')
+    this.$store.dispatch('orders/getAllOrders')
+    this.$store.dispatch('deliveries/getAllDeliveries')
+    this.$store.dispatch('users/getAllUsers')
   },
   methods: {
     LineChartData () {
