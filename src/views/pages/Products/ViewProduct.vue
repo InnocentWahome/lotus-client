@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>View Employee</h2>
+    <h2>View Product</h2>
     <title-bar :title-stack="titleStack" />
     <hero-bar>
       {{ heroTitle }}
@@ -15,7 +15,7 @@
     <section class="section is-main-section">
       <notification class="is-info">
         <div>
-          <span><b>Update Employee info.</b> Employees will be notified whenever their data changes</span>
+          <span><b>Update Products info.</b></span>
         </div>
       </notification>
       <tiles>
@@ -113,7 +113,7 @@
         </card-component>
         <card-component
           v-if="isProfileExists"
-          title="Employee Profile"
+          title="Product Overview"
           icon="account"
           class="tile is-child"
         >
@@ -170,7 +170,7 @@ import UserAvatar from '@/components/BaseUserAvatar.vue'
 import Notification from '@/components/BaseNotification.vue'
 // import bcrypt from 'bcryptjs'
 export default defineComponent({
-  name: 'EmployeesForm',
+  name: 'ViewProduct',
   components: {
     UserAvatar,
     FilePicker,
@@ -204,24 +204,24 @@ export default defineComponent({
   computed: {
     titleStack () {
       return [
-        'Employees',
-        this.isProfileExists ? this.form.firstName + ' ' + this.form.lastName : 'New Employee'
+        'Products: ',
+        this.isProfileExists ? this.form.firstName + ' ' + this.form.lastName : 'New Product'
       ]
     },
     heroTitle () {
-      return this.isProfileExists ? this.form.name : 'Create Employee'
+      return this.isProfileExists ? this.form.name : 'Create Product'
     },
     heroRouterLinkTo () {
-      return this.isProfileExists ? { name: 'admin-employee.new' } : { name: 'Employees' }
+      return this.isProfileExists ? { name: 'admin-product.new' } : { name: 'Products' }
     },
     heroRouterLinkLabel () {
-      return this.isProfileExists ? 'New Employee' : 'Dashboard'
+      return this.isProfileExists ? 'New Product' : 'Dashboard'
     },
     formCardTitle () {
-      return this.isProfileExists ? 'Edit Employee' : 'Create Employee'
+      return this.isProfileExists ? 'Edit Product' : 'Create Product'
     },
     ...mapState({
-      employees: state => state.employees.employees
+      products: state => state.products.products
     })
   },
   watch: {
@@ -247,7 +247,7 @@ export default defineComponent({
   methods: {
     getData () {
       if (this.$route.params.id) {
-        const item = this.employees.find((employee) => employee._id === this.$route.params.id)
+        const item = this.products.find((product) => product._id === this.$route.params.id)
 
         if (item) {
           this.isProfileExists = true
@@ -260,7 +260,7 @@ export default defineComponent({
           this.createdReadable = new Date(item.created_mm_dd_yyyy).toLocaleDateString()
         }
       } else {
-        this.$router.push({ name: 'admin-employee.new' })
+        this.$router.push({ name: 'admin-product.new' })
       }
     },
     dateInput (v) {
@@ -270,27 +270,27 @@ export default defineComponent({
       // const password = 'password'
       // const saltRounds = 2
       // const hashedPassword = bcrypt.hash(password, saltRounds)
-      const newEmployee = {
+      const newProduct = {
         firstName: this.form.firstName,
         lastName: this.form.lastName,
         email: this.form.email,
         phoneNumber: this.form.phoneNumber,
         password: this.form.password
       }
-      const updateEmployee = {
-        employeeId: this.$route.params.id,
-        employee: this.form
+      const updateProduct = {
+        productId: this.$route.params.id,
+        product: this.form
       }
       if (this.$route.params.id) {
-        this.$store.dispatch('employees/updateEmployee', updateEmployee)
+        this.$store.dispatch('products/updateProduct', updateProduct)
         this.$buefy.snackbar.open({
-          message: 'Successfully updated the Employee',
+          message: 'Successfully updated the Product',
           queue: true
         })
       } else {
-        this.$store.dispatch('employees/createEmployee', newEmployee)
+        this.$store.dispatch('products/createProduct', newProduct)
         this.$buefy.snackbar.open({
-          message: 'Successfully created the Employee',
+          message: 'Successfully created the Product',
           queue: true
         })
       }

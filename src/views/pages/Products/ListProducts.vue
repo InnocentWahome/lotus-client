@@ -2,7 +2,7 @@
   <div>
     <title-bar :title-stack="titleStack" />
     <hero-bar>
-      Employees
+      Products
       <router-link
         slot="right"
         to="/dashboard"
@@ -27,7 +27,7 @@
         title="All Users"
         icon="account-multiple"
       >
-        <employees-table checkable />
+        <products-table checkable />
       </card-component>
     </section>
   </div>
@@ -36,23 +36,23 @@
 <script>
 import { defineComponent } from '@vue/composition-api'
 import Notification from '@/components/BaseNotification.vue'
-import EmployeesTable from '@/components/datagrids/EmployeesTable.vue'
+import ProductsTable from '@/components/datagrids/ProductsTable.vue'
 import CardComponent from '@/components/BaseCardComponent.vue'
 import TitleBar from '@/components/BaseTitleBar.vue'
 import HeroBar from '@/components/BaseHeroBar.vue'
 
 export default defineComponent({
-  name: 'Employees',
+  name: 'Products',
   components: {
     HeroBar,
     TitleBar,
     CardComponent,
-    EmployeesTable,
+    ProductsTable,
     Notification
   },
   data () {
     return {
-      titleStack: ['Admin', 'Employees']
+      titleStack: ['Products']
     }
   }
 })
