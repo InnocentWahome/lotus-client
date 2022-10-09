@@ -348,7 +348,7 @@ export default defineComponent({
     getData () {
       if (this.$route.params.id) {
         const item = this.orders.find(
-          (order) => order._id === this.$route.params.id
+          (order) => order.id === this.$route.params.id
         )
 
         if (item) {

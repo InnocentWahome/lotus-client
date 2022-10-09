@@ -162,7 +162,7 @@ const routes = [
       component: () =>
         import(
           /* webpackChunkName: "client-form" */
-          '@/components/forms/EmployeesForm.vue'
+          '@/components/forms/Users.vue'
         ),
       props: true
     },
@@ -176,7 +176,7 @@ const routes = [
       component: () =>
         import(
           /* webpackChunkName: "client-form" */
-          '@/components/forms/EmployeesForm.vue'
+          '@/components/forms/Users.vue'
         )
     }
     ],
@@ -236,89 +236,81 @@ const routes = [
       import(/* webpackChunkName: "forms" */ '../views/pages/FormsIndex.vue'),
     children: [{
       meta: {
-        title: 'Edit Project',
-        requiresAuth: true,
-        role: 'Admin'
+        title: 'Edit Delivery',
+        requiresAuth: true
       },
-      path: '/project/edit/:id',
-      name: 'project.edit',
+      path: '/deliveries/edit/:id',
+      name: 'deliveries.edit',
       component: () =>
         import(
         /* webpackChunkName: "client-form" */
-          '@/components/forms/ProjectsForm.vue'
+          '@/components/forms/DeliveriesForm.vue'
         ),
       props: true
     },
     {
-      path: '/project/new',
-      name: 'project.new',
+      path: '/deliveries/new',
+      name: 'deliveries.new',
       component: () =>
         import(
         /* webpackChunkName: "client-form" */
-          '@/components/forms/ProjectsForm.vue'
+          '@/components/forms/DeliveriesForm.vue'
         ),
       meta: {
-        title: 'New Project',
-        requiresAuth: true,
-        role: 'Admin'
+        title: 'New Delivery'
       }
     },
     {
-      path: '/team/edit/:id',
-      name: 'team.edit',
+      path: '/order/edit/:id',
+      name: 'order.edit',
       component: () =>
         import(
         /* webpackChunkName: "team-form" */
-          '@/components/forms/TeamForm.vue'
+          '@/components/forms/OrdersForm.vue'
         ),
       meta: {
-        title: 'Edit Team',
-        requiresAuth: true,
-        role: 'Admin'
+        title: 'Edit Order'
       },
       props: true
     },
     {
       meta: {
-        title: 'New Team',
-        requiresAuth: true,
-        role: 'Admin'
+        title: 'New Order'
       },
-      path: '/team/new',
-      name: 'team.new',
+      path: '/order/new',
+      name: 'order.new',
+      component: () =>
+        import(
+        /* webpackChunkName: "order-form" */
+          '@/components/forms/OrdersForm.vue'
+        )
+    },
+    {
+      path: '/product/edit/:id',
+      name: 'product.edit',
       component: () =>
         import(
         /* webpackChunkName: "team-form" */
-          '@/components/forms/TeamForm.vue'
-        )
+          '@/components/forms/ProductsForm.vue'
+        ),
+      meta: {
+        title: 'Edit Product'
+      },
+      props: true
     },
-    // {
-    //   meta: {
-    //     title: 'Edit Task',
-    //     requiresAuth: true
-    //   },
-    //   path: '/task/edit/:id',
-    //   name: 'task.edit',
-    //   component: () =>
-    //     import(
-    //     /* webpackChunkName: "task-form" */
-    //       '@/components/forms/TasksForm.vue'
-    //     ),
-    //   props: true
-    // },
     {
       meta: {
-        title: 'New Task',
-        requiresAuth: true
+        title: 'New Product'
       },
-      path: '/task/new',
-      name: 'task.new',
+      path: '/product/new',
+      name: 'product.new',
       component: () =>
         import(
-        /* webpackChunkName: "task-form" */
-          '@/components/forms/TasksForm.vue'
+        /* webpackChunkName: "product-form" */
+          '@/components/forms/ProductsForm.vue'
         )
-    }]
+    }
+    ]
   },
   {
     path: '/error',

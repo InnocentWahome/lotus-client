@@ -70,11 +70,10 @@
         cell-class="is-actions-cell"
       >
         <div
-          v-if="userRole == 'Super-Admin' || userRole == 'Seller'"
           class="buttons is-right no-wrap"
         >
           <router-link
-            :to="{name:'admin-deliveries.edit', params: {id: props.row._id}}"
+            :to="{ name: 'deliveries.edit', params: { id: props.row.id } }"
             class="button is-small is-info"
           >
             <b-icon
@@ -170,7 +169,7 @@ export default defineComponent({
       this.isModalActive = false
     },
     deleteItem (obj) {
-      this.$store.dispatch('deliveries/deleteDelivery', obj._id)
+      this.$store.dispatch('deliveries/deleteDelivery', obj.id)
       this.$buefy.snackbar.open({
         message: 'Deleted Deliveries ' + obj.firstName,
         queue: true

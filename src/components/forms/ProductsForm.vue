@@ -14,7 +14,7 @@
     <section class="section is-main-section">
       <notification class="is-info">
         <div>
-          <span><b>Update Employee info.</b> Employees will be notified whenever their data changes</span>
+          <span><b>Efficient teams are made of 5 or less members.</b>Team work makes the dream work!</span>
         </div>
       </notification>
       <tiles>
@@ -36,84 +36,64 @@
             </b-field>
             <hr>
             <b-field
-              label="Profile"
+              label="Team Avatar"
               horizontal
             >
               <file-picker type="is-info" />
             </b-field>
             <hr>
             <b-field
-              label="First Name"
-              message="First name"
+              label="Name"
+              message="Team name"
               horizontal
             >
               <b-input
-                v-model="form.firstName"
-                placeholder="e.g. John"
+                v-model="form.name"
+                placeholder="e.g. Team One"
                 required
               />
             </b-field>
             <b-field
-              label="Last name"
-              message="Last name"
+              label="Description"
+              message="Team description"
               horizontal
             >
               <b-input
-                v-model="form.lastName"
-                placeholder="e.g. Doe"
+                v-model="form.description"
+                placeholder="e.g. This team solely works on Project A"
                 required
               />
             </b-field>
             <b-field
-              label="Email"
-              message="Company email"
+              label="Members"
+              message="Members of the team"
               horizontal
             >
               <b-input
-                v-model="form.email"
-                placeholder="e.g. johndoe@lotus.com"
+                v-model="form.members"
+                placeholder="e.g. Prudence Wanjau & John Kamau"
                 required
               />
             </b-field>
             <b-field
-              label="Password"
-              message="Confidential Password"
+              label="Leader"
+              message="Team's captain"
               horizontal
             >
               <b-input
-                v-model="form.password"
-                placeholder="e.g. K!22@ark_cd"
+                v-model="form.leader"
+                placeholder="e.g. Prudence Wanjau"
                 required
-                type="password"
               />
             </b-field>
             <b-field
-              label="Role"
-              message="User's role"
-              horizontal
-            >
-              <div class="select">
-                <b-select
-                  v-model="form.role"
-                  placeholder="Select a role"
-                >
-                  <option value="Employee">
-                    Employee
-                  </option>
-                  <option value="Admin">
-                    Admin
-                  </option>
-                </b-select>
-              </div>
-            </b-field>
-            <b-field
-              label="Phone Number"
-              message="Phone Number"
+              label="Responsibilities"
+              message="Duties of the team"
               horizontal
             >
               <b-input
-                v-model="form.phoneNumber"
-                placeholder="2547******"
+                v-model="form.responsibilities"
+                placeholder="e.g. Devops & SSR"
                 required
               />
             </b-field>
@@ -129,7 +109,7 @@
               <b-button
                 type=""
                 :loading="isLoading"
-                @click="$router.push('/dashboard/employees')"
+                @click="$router.push('/dashboard/teams')"
               >
                 Back
               </b-button>
@@ -138,7 +118,7 @@
         </card-component>
         <card-component
           v-if="isProfileExists"
-          title="Employee Profile"
+          title="Team Profile"
           icon="account"
           class="tile is-child"
         >
@@ -147,42 +127,41 @@
             class="image has-max-width is-aligned-center"
           />
           <hr>
-          <b-field label="First Name">
+          <b-field label="Name">
             <b-input
-              :value="form.firstName"
+              :value="form.name"
               custom-class="is-static"
               readonly
             />
           </b-field>
-          <b-field label="Last Name">
+          <b-field label="Description">
             <b-input
-              :value="form.lastName"
+              :value="form.description"
               custom-class="is-static"
               readonly
             />
           </b-field>
-          <b-field label="Email">
+          <b-field label="Members">
             <b-input
-              :value="form.email"
+              :value="form.members"
               custom-class="is-static"
               readonly
             />
           </b-field>
-          <b-field label="Role">
+          <b-field label="Leader">
             <b-input
-              :value="form.role"
+              :value="form.leader"
               custom-class="is-static"
               readonly
             />
           </b-field>
-          <b-field label="Phone Number">
+          <b-field label="Responsibilities">
             <b-input
-              :value="form.phoneNumber"
+              :value="form.responsibilities"
               custom-class="is-static"
               readonly
             />
           </b-field>
-          <hr>
         </card-component>
       </tiles>
     </section>
@@ -200,9 +179,9 @@ import CardComponent from '@/components/BaseCardComponent.vue'
 import FilePicker from '@/components/BaseFilePicker.vue'
 import UserAvatar from '@/components/BaseUserAvatar.vue'
 import Notification from '@/components/BaseNotification.vue'
-// import bcrypt from 'bcryptjs'
+
 export default defineComponent({
-  name: 'EmployeesForm',
+  name: 'ProductsForm',
   components: {
     UserAvatar,
     FilePicker,
@@ -224,12 +203,11 @@ export default defineComponent({
       isLoading: false,
       form: {
         id: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        role: 'Employee',
-        phoneNumber: ''
+        name: '',
+        description: '',
+        members: '',
+        leader: '',
+        responsibilities: ''
       },
       createdReadable: null
     }
@@ -237,24 +215,24 @@ export default defineComponent({
   computed: {
     titleStack () {
       return [
-        'Employees',
-        this.isProfileExists ? this.form.firstName + ' ' + this.form.lastName : 'New Employee'
+        'Products',
+        this.isProfileExists ? this.form.name : 'New Product'
       ]
     },
     heroTitle () {
-      return this.isProfileExists ? this.form.name : 'Create Employee'
+      return this.isProfileExists ? this.form.name : 'Create Product'
     },
     heroRouterLinkTo () {
-      return this.isProfileExists ? { name: 'admin-employee.new' } : { name: 'Employees' }
+      return this.isProfileExists ? { name: 'product.new' } : { name: 'Products' }
     },
     heroRouterLinkLabel () {
-      return this.isProfileExists ? 'New Employee' : 'Dashboard'
+      return this.isProfileExists ? 'New Product' : 'Dashboard'
     },
     formCardTitle () {
-      return this.isProfileExists ? 'Edit Employee' : 'Create Employee'
+      return this.isProfileExists ? 'Edit Product' : 'Create Product'
     },
     ...mapState({
-      employees: state => state.employees.employees
+      products: state => state.products.products
     })
   },
   watch: {
@@ -263,12 +241,11 @@ export default defineComponent({
 
       if (!newValue) {
         this.form.id = ''
-        this.form.firstName = ''
-        this.form.lastName = ''
-        this.form.email = ''
-        this.form.password = ''
-        this.form.role = ''
-        this.form.phoneNumber = ''
+        this.form.name = ''
+        this.form.description = ''
+        this.form.members = ''
+        this.form.leader = ''
+        this.form.responsibilities = ''
         this.createdReadable = new Date().toLocaleDateString()
       } else {
         this.getData()
@@ -281,52 +258,49 @@ export default defineComponent({
   methods: {
     getData () {
       if (this.$route.params.id) {
-        const item = this.employees.find((employee) => employee._id === this.$route.params.id)
+        const item = this.products.find((product) => product.id === this.$route.params.id)
 
         if (item) {
           this.isProfileExists = true
           this.form.id = item.id
-          this.form.firstName = item.firstName
-          this.form.lastName = item.lastName
-          this.form.email = item.email
-          this.form.role = item.role
-          this.form.phoneNumber = item.phoneNumber
+          this.form.name = item.name
+          this.form.description = item.description
+          this.form.leader = item.leader
+          this.form.members = item.members
+          this.form.responsibilities = item.responsibilities
 
           this.createdReadable = new Date(item.created_mm_dd_yyyy).toLocaleDateString()
         }
       } else {
-        this.$router.push({ name: 'admin-employee.new' })
+        this.$router.push({ name: 'product.new' })
       }
     },
     dateInput (v) {
       this.createdReadable = new Date(v).toLocaleDateString()
     },
     submit () {
-      // const password = 'password'
-      // const saltRounds = 2
-      // const hashedPassword = bcrypt.hash(password, saltRounds)
-      const newEmployee = {
-        firstName: this.form.firstName,
-        lastName: this.form.lastName,
-        email: this.form.email,
-        role: this.form.role,
-        phoneNumber: this.form.phoneNumber,
-        password: this.form.password
+      const productData = {
+        description: this.form.description,
+        members: this.form.members,
+        leader: this.form.leader,
+        responsibilities: this.form.responsibilities,
+        name: this.form.name
+
       }
-      const updateEmployee = {
-        employeeId: this.$route.params.id,
-        employee: this.form
+      const updateProduct = {
+        productId: this.$route.params.id,
+        product: this.form
       }
       if (this.$route.params.id) {
-        this.$store.dispatch('employees/updateEmployee', updateEmployee)
+        this.$store.dispatch('products/updateProduct', updateProduct)
         this.$buefy.snackbar.open({
-          message: 'Successfully updated the Employee',
+          message: 'Successfully updated the product',
           queue: true
         })
       } else {
-        this.$store.dispatch('employees/createEmployee', newEmployee)
+        this.$store.dispatch('products/createProduct', productData)
         this.$buefy.snackbar.open({
-          message: 'Successfully created the Employee',
+          message: 'Successfully created the product',
           queue: true
         })
       }

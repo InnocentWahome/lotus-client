@@ -247,7 +247,7 @@ export default defineComponent({
   methods: {
     getData () {
       if (this.$route.params.id) {
-        const item = this.users.find((user) => user._id === this.$route.params.id)
+        const item = this.users.find((user) => user.id === this.$route.params.id)
 
         if (item) {
           this.isProfileExists = true

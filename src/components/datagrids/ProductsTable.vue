@@ -70,7 +70,7 @@
           class="buttons is-right no-wrap"
         >
           <router-link
-            :to="{name:'admin-deliveries.edit', params: {id: props.row._id}}"
+            :to="{name:'product.edit', params: {id: props.row.id}}"
             class="button is-small is-info"
           >
             <b-icon
@@ -156,7 +156,7 @@ export default defineComponent({
     trashModalOpen (obj) {
       this.isModalActive = true
       this.trashObject = obj
-      this.trashConfirm(obj._id)
+      this.trashConfirm(obj.id)
     },
     trashConfirm (id) {
       console.log(id)
@@ -168,7 +168,7 @@ export default defineComponent({
       this.isModalActive = false
     },
     deleteItem (obj) {
-      this.$store.dispatch('products/deleteProduct', obj._id)
+      this.$store.dispatch('products/deleteProduct', obj.id)
       this.$buefy.snackbar.open({
         message: 'Deleted Project ' + obj.name,
         queue: true

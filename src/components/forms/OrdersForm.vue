@@ -12,11 +12,6 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <notification class="is-info">
-        <div>
-          <span><b> can now create their own tasks!</b></span>
-        </div>
-      </notification>
       <tiles>
         <card-component
           :title="formCardTitle"
@@ -151,7 +146,7 @@
               <b-button
                 type=""
                 :loading="isLoading"
-                @click="$router.push('/dashboard/tasks')"
+                @click="$router.push('/dashboard/orders')"
               >
                 Back
               </b-button>
@@ -237,27 +232,22 @@
 <script>
 import { defineComponent } from '@vue/composition-api'
 import { mapState } from 'vuex'
-// import find from 'lodash/find'
 import TitleBar from '@/components/BaseTitleBar.vue'
 import HeroBar from '@/components/BaseHeroBar.vue'
 import Tiles from '@/components/BaseTiles.vue'
 import CardComponent from '@/components/BaseCardComponent.vue'
-// import FilePicker from '@/components/FilePicker.vue'
 import UserAvatar from '@/components/BaseUserAvatar.vue'
-import Notification from '@/components/BaseNotification.vue'
 
 // import vue router
 // import router from 'vue-router'
 export default defineComponent({
-  name: 'TasksForm',
+  name: 'OrdersForm',
   components: {
     UserAvatar,
-    // FilePicker,
     CardComponent,
     Tiles,
     HeroBar,
-    TitleBar,
-    Notification
+    TitleBar
   },
   props: {
     id: {
@@ -287,24 +277,24 @@ export default defineComponent({
   computed: {
     titleStack () {
       return [
-        'Tasks',
-        this.isProfileExists ? this.form.name : 'New Task'
+        'Orders',
+        this.isProfileExists ? this.form.name : 'New Order'
       ]
     },
     heroTitle () {
-      return this.isProfileExists ? this.form.name : 'Create Task'
+      return this.isProfileExists ? this.form.name : 'Create Order'
     },
     heroRouterLinkTo () {
-      return this.isProfileExists ? { name: 'task.new' } : { name: 'Tasks' }
+      return this.isProfileExists ? { name: 'order.new' } : { name: 'Orders' }
     },
     heroRouterLinkLabel () {
-      return this.isProfileExists ? 'New Task' : 'Dashboard'
+      return this.isProfileExists ? 'New Order' : 'Dashboard'
     },
     formCardTitle () {
-      return this.isProfileExists ? 'Edit Task' : 'Create Task'
+      return this.isProfileExists ? 'Edit Order' : 'Create Order'
     },
     ...mapState({
-      tasks: state => state.tasks.tasks
+      orders: state => state.orders.orders
     })
   },
   watch: {
@@ -321,7 +311,6 @@ export default defineComponent({
         this.form.status = ''
         this.form.progress = 0
         this.form.dueDate = null
-        // this.createdReadable = new Date().toLocaleDateString()
       } else {
         this.getData()
       }
@@ -341,14 +330,14 @@ export default defineComponent({
     }
   },
   mounted () {
-    this.loadData = this.$store.state.projects.projectsCount
+    this.loadData = this.$store.state.orders.ordersCount
     this.getData()
   },
   methods: {
     getData () {
       if (this.$route.params.id) {
-        const item = this.tasks.find((task) => task._id === this.$route.params.id)
-
+        const item = this.orders.find((order) => order.id === this.$route.params.id)
+        console.log('item found ', item)
         if (item) {
           this.isProfileExists = true
           this.form.id = item.id
@@ -360,18 +349,16 @@ export default defineComponent({
           this.form.status = item.status
           this.form.dueDate = item.dueDate
           this.form.progress = item.progress
-
-          // this.createdReadable = new Date(item.created_mm_dd_yyyy).toLocaleDateString()
         }
       } else {
-        this.$router.push({ name: 'task.new' })
+        this.$router.push({ name: 'order.new' })
       }
     },
     dateInput (v) {
       this.createdReadable = new Date(v).toLocaleDateString()
     },
     async submit () {
-      const taskData = {
+      const orderData = {
         name: this.form.name,
         description: this.form.description,
         reporter: this.form.reporter,
@@ -381,27 +368,27 @@ export default defineComponent({
         progress: this.form.progress,
         dueDate: this.form.dueDate
       }
-      const updateTask = {
-        taskId: this.$route.params.id,
-        task: this.form
+      const updateOrder = {
+        orderId: this.$route.params.id,
+        order: this.form
       }
       if (this.$route.params.id) {
         try {
-          this.$store.dispatch('tasks/updateTask', updateTask)
+          this.$store.dispatch('orders/updateOrder', updateOrder)
           this.$buefy.snackbar.open({
-            message: 'Successfully updated the task',
+            message: 'Successfully updated the order',
             queue: true
           })
         } catch (error) {
           this.$buefy.snackbar.open({
-            message: 'Error created the task',
+            message: 'Error created the order',
             queue: true
           })
         }
       } else {
-        this.$store.dispatch('tasks/createTasks', taskData)
+        this.$store.dispatch('orders/createOrder', orderData)
         this.$buefy.snackbar.open({
-          message: 'Successfully created the task',
+          message: 'Successfully created the order',
           queue: true
         })
       }

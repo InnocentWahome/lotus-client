@@ -89,7 +89,7 @@
           class="buttons is-right no-wrap"
         >
           <router-link
-            :to="{ name: 'order.edit', params: { id: props.row._id } }"
+            :to="{ name: 'order.edit', params: { id: props.row.id } }"
             class="button is-small is-info"
           >
             <b-icon
@@ -186,7 +186,7 @@ export default defineComponent({
       this.isModalActive = false
     },
     deleteItem (obj) {
-      this.$store.dispatch('orders/deleteOrder', obj._id)
+      this.$store.dispatch('orders/deleteOrder', obj.id)
       this.$buefy.snackbar.open({
         message: 'Deleted order ' + obj.name,
         queue: true

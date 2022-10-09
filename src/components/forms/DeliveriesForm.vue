@@ -14,7 +14,7 @@
     <section class="section is-main-section">
       <notification class="is-info">
         <div>
-          <span><b>Quick tip:</b> To mark a project as completely done, use the "Terminated" option</span>
+          <span><b>Quick tip:</b> To mark a delivery as completely done, use the "Terminated" option</span>
         </div>
       </notification>
       <tiles>
@@ -36,7 +36,7 @@
             </b-field>
             <hr>
             <b-field
-              label="Project logo"
+              label="Delivery logo"
               horizontal
             >
               <file-picker type="is-info" />
@@ -44,17 +44,17 @@
             <hr>
             <b-field
               label="Name"
-              message="Project name"
+              message="Delivery name"
               horizontal
             >
               <b-input
                 v-model="form.name"
-                placeholder="e.g. Project A"
+                placeholder="e.g. Delivery A"
               />
             </b-field>
             <b-field
               label="Description"
-              message="Project description"
+              message="Delivery description"
               horizontal
             >
               <b-input
@@ -156,7 +156,7 @@
               <b-button
                 type=""
                 :loading="isLoading"
-                @click="$router.push('/dashboard/projects')"
+                @click="$router.push('/dashboard/deliveries')"
               >
                 Back
               </b-button>
@@ -165,7 +165,7 @@
         </card-component>
         <card-component
           v-if="isProfileExists"
-          title="Project Profile"
+          title="Delivery Profile"
           icon="account"
           class="tile is-child"
         >
@@ -250,7 +250,7 @@ import UserAvatar from '@/components/BaseUserAvatar.vue'
 import Notification from '@/components/BaseNotification.vue'
 
 export default defineComponent({
-  name: 'ProjectsForm',
+  name: 'DeliveriesForm',
   components: {
     UserAvatar,
     FilePicker,
@@ -287,26 +287,26 @@ export default defineComponent({
   computed: {
     titleStack () {
       return [
-        'Projects',
-        this.isProfileExists ? this.form.name : 'New Project'
+        'Deliveries',
+        this.isProfileExists ? this.form.name : 'New Delivery'
       ]
     },
     heroTitle () {
-      return this.isProfileExists ? this.form.name : 'Create Project'
+      return this.isProfileExists ? this.form.name : 'Create Delivery'
     },
     heroRouterLinkTo () {
       return this.isProfileExists
-        ? { name: 'project.new' }
-        : { name: 'Projects' }
+        ? { name: 'deliveries.new' }
+        : { name: 'Deliveries' }
     },
     heroRouterLinkLabel () {
-      return this.isProfileExists ? 'New Project' : 'Dashboard'
+      return this.isProfileExists ? 'New Delivery' : 'Dashboard'
     },
     formCardTitle () {
-      return this.isProfileExists ? 'Edit Project' : 'Create Project'
+      return this.isProfileExists ? 'Edit Delivery' : 'Create Delivery'
     },
     ...mapState({
-      projects: (state) => state.projects.projects
+      deliveries: (state) => state.deliveries.deliveries
     })
   },
   watch: {
@@ -323,7 +323,6 @@ export default defineComponent({
         this.form.status = ''
         this.form.endDate = null
         this.form.progress = ''
-        // this.createdReadable = new Date().toLocaleDateString()
       } else {
         this.getData()
       }
@@ -346,8 +345,8 @@ export default defineComponent({
   methods: {
     getData () {
       if (this.$route.params.id) {
-        const item = this.projects.find(
-          (project) => project._id === this.$route.params.id
+        const item = this.deliveries.find(
+          (deliveries) => deliveries.id === this.$route.params.id
         )
 
         if (item) {
@@ -361,19 +360,16 @@ export default defineComponent({
           this.form.status = item.status
           this.form.endDate = item.endDate
           this.form.progress = item.progress
-          // this.form.created_date = new Date(item.created_mm_dd_yyyy)
-
-          // this.createdReadable = new Date(item.created_mm_dd_yyyy).toLocaleDateString()
         }
       } else {
-        this.$router.push({ name: 'project.new' })
+        this.$router.push({ name: 'deliveries.new' })
       }
     },
     dateInput (v) {
       this.createdReadable = new Date(v).toLocaleDateString()
     },
     submit () {
-      const newProject = {
+      const newDelivery = {
         name: this.form.name,
         description: this.form.description,
         category: this.form.category,
@@ -383,20 +379,20 @@ export default defineComponent({
         endDate: this.form.endDate,
         progress: this.form.progress
       }
-      const updateProject = {
-        projectId: this.$route.params.id,
-        project: this.form
+      const updateDelivery = {
+        deliveryId: this.$route.params.id,
+        delivery: this.form
       }
       if (this.$route.params.id) {
         this.$store
-          .dispatch('projects/updateProject', updateProject)
+          .dispatch('deliveries/updateDelivery', updateDelivery)
           .then((response) => {
             if (response.status === 200) {
               this.isLoading = true
               setTimeout(() => {
                 this.isLoading = false
                 this.$buefy.snackbar.open({
-                  message: 'Successfully updated the project!',
+                  message: 'Successfully updated the delivery!',
                   queue: false
                 })
               }, 750)
@@ -405,7 +401,7 @@ export default defineComponent({
               setTimeout(() => {
                 this.isLoading = false
                 this.$buefy.snackbar.open({
-                  message: 'Failed to update the project!',
+                  message: 'Failed to update the delivery!',
                   queue: false
                 })
               }, 750)
@@ -413,7 +409,7 @@ export default defineComponent({
           })
       } else {
         this.$store
-          .dispatch('projects/createProject', newProject)
+          .dispatch('deliveries/createDelivery', newDelivery)
           .then((response) => {
             console.log(response)
             if (response.status === 200) {
@@ -421,7 +417,7 @@ export default defineComponent({
               setTimeout(() => {
                 this.isLoading = false
                 this.$buefy.snackbar.open({
-                  message: 'Successfully created a project!',
+                  message: 'Successfully created a delivery!',
                   queue: false
                 })
               }, 750)
@@ -431,7 +427,7 @@ export default defineComponent({
                 this.isLoading = false
                 this.$buefy.snackbar.open(
                   {
-                    message: 'Failed to create a project!',
+                    message: 'Failed to create a delivery!',
                     queue: false
                   }
                 )
