@@ -33,11 +33,11 @@
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="Product ID"
+        label="Product "
         field="product_id"
         sortable
       >
-        {{ props.row.product_id }}
+        {{ props.row.product ? "[" + props.row.product_id + "] " + props.row.product.name : props.row.product_id }}
       </b-table-column>
       <b-table-column
         v-slot="props"
@@ -53,7 +53,7 @@
         field="userId"
         sortable
       >
-        {{ props.row.userId }}
+        {{ props.row.user ? "[" + props.row.user.id + "] " + props.row.user.firstName : props.row.product_id }}
       </b-table-column>
       <b-table-column
         v-slot="props"

@@ -38,6 +38,22 @@
       </b-table-column>
       <b-table-column
         v-slot="props"
+        label="Seller ID"
+        field="user_id"
+        sortable
+      >
+        {{ props.row.user_id }}
+      </b-table-column>
+      <b-table-column
+        v-slot="props"
+        label="Seller First Name"
+        field="user.firstName"
+        sortable
+      >
+        {{ props.row.user ? props.row.user.firstName : "-" }}
+      </b-table-column>
+      <b-table-column
+        v-slot="props"
         label="Description"
         field="description"
         sortable

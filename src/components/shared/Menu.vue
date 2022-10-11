@@ -33,15 +33,6 @@
             label="Dashboard"
             href="/dashboard"
           />
-          <!-- Profile page -->
-          <b-menu-list>
-            <b-menu-item
-              v-if="userRole == 'Super-Admin' || userRole == 'Seller'"
-              label="Profile"
-              icon="link"
-              href="/dashboard/profile"
-            />
-          </b-menu-list>
           <!-- Products -->
           <b-menu-list>
             <b-menu-item
