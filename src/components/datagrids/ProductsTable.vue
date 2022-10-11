@@ -164,10 +164,17 @@ export default defineComponent({
   },
   methods: {
     getProducts () {
-      this.$store.dispatch('products/getAllProducts')
-        .then((response) => {
-          console.log(response)
-        })
+      const role = this.$store.state.authentication.role
+      const userId = this.$store.state.authentication.userId
+      console.log(role, userId)
+      if (role === 'Super-Admin') {
+        this.$store.dispatch('products/getAllProducts')
+      } else {
+        this.$store.dispatch('products/getSellersProducts', userId)
+      }
+      // .then((response) => {
+      //   console.log(response)
+      // })
     },
     trashModalOpen (obj) {
       this.isModalActive = true

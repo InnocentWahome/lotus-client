@@ -37,7 +37,7 @@
         field="product_id"
         sortable
       >
-        {{ props.row.product ? "[" + props.row.product_id + "] " + props.row.product.name : props.row.product_id }}
+        {{ props.row.product ? "[" + props.row.product_id + "] " + props.row.product.name : props.row.product_id + ":" + props.row.product.name }}
       </b-table-column>
       <b-table-column
         v-slot="props"
@@ -49,12 +49,20 @@
       </b-table-column>
       <b-table-column
         v-slot="props"
-        label="User"
+        label="Customer"
         field="userId"
         sortable
       >
         {{ props.row.user ? "[" + props.row.user.id + "] " + props.row.user.firstName : props.row.product_id }}
       </b-table-column>
+      <!-- <b-table-column
+        v-slot="props"
+        label="Seller"
+        field="sellerId"
+        sortable
+      >
+        {{ props.row.user ? "[" + props.row.user.id + "] " + props.row.user.firstName : props.row.product_id }}
+      </b-table-column> -->
       <b-table-column
         v-slot="props"
         label="Payment Status"
@@ -168,8 +176,15 @@ export default defineComponent({
   },
   methods: {
     getOrders () {
-      this.$store.dispatch('orders/getAllOrders')
+      const role = this.$store.state.authentication.role
+      const userId = this.$store.state.authentication.userId
+      if (role === 'Super-Admin') {
+        this.$store.dispatch('orders/getAllOrders')
+      } else {
+        this.$store.dispatch('orders/getSellersOrders', userId)
+      }
     },
+
     trashModalOpen (obj) {
       this.trashObject = obj
       this.isModalActive = true

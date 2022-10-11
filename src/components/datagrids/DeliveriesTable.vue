@@ -151,7 +151,13 @@ export default defineComponent({
   },
   methods: {
     getDeliveries () {
-      this.$store.dispatch('deliveries/getAllDeliveries')
+      const role = this.$store.state.authentication.role
+      const userId = this.$store.state.authentication.userId
+      if (role === 'Super-Admin') {
+        this.$store.dispatch('deliveries/getAllDeliveries')
+      } else {
+        this.$store.dispatch('deliveries/getSellersDeliveries', userId)
+      }
     },
     trashModalOpen (obj) {
       this.trashObject = obj

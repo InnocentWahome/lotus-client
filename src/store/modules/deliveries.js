@@ -31,6 +31,15 @@ export default {
       commit('SET_DELIVERIES_COUNT', response.data?.data.length)
       return response
     },
+    async getSellersDeliveries ({ commit }, payload) {
+      const response = await $http.Api({
+        method: 'GET',
+        url: `/deliveries/deliveries/${payload}`
+      })
+      commit('SET_DELIVERIES', response.data?.data)
+      commit('SET_DELIVERIES_COUNT', response.data?.data.length)
+      return response
+    },
     async createDelivery ({ commit }, payload) {
       const response = await $http.Api({
         method: 'POST',
