@@ -1,7 +1,19 @@
 <template>
   <div>
     <hero-bar>
-      Deliveries
+      <span style="padding-right: 20px; padding-bottom: 2px;">
+        Deliveries
+      </span>
+      <router-link
+        :to="{ name: 'deliveries.new' }"
+        class="button is-small"
+        style="float: right !important;"
+      >
+        <b-icon
+          icon="plus"
+          size="is-small"
+        />
+      </router-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component

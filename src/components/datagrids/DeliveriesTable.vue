@@ -74,15 +74,15 @@
         >
           <router-link
             :to="{ name: 'deliveries.edit', params: { id: props.row.id } }"
-            class="button is-small is-info"
+            class="button is-small"
           >
             <b-icon
               icon="account-edit"
               size="is-small"
             />
           </router-link>
-          <b-button
-            type="is-danger"
+          .<b-button
+            type=""
             size="is-small"
             @click="deleteItem(props.row)"
           >
