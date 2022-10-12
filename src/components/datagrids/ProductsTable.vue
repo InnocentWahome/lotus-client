@@ -30,6 +30,14 @@
       </b-table-column>
       <b-table-column
         v-slot="props"
+        label="ID"
+        field="id"
+        sortable
+      >
+        {{ props.row.id }}
+      </b-table-column>
+      <b-table-column
+        v-slot="props"
         label="Name"
         field="name"
         sortable

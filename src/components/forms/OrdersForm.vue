@@ -20,7 +20,7 @@
         >
           <form @submit.prevent="submit">
             <b-field
-              label="ID"
+              label="Order ID"
               horizontal
             >
               <b-input
@@ -31,109 +31,121 @@
             </b-field>
             <hr>
             <b-field
-              label="Name"
-              message="Task name"
+              label="Product ID"
+              message="ID of the product"
               horizontal
             >
               <b-input
-                v-model="form.name"
-                placeholder="e.g. Create Datagrids"
+                v-model="form.product_id"
+                placeholder="e.g. 13232"
                 required
               />
             </b-field>
             <b-field
-              label="Description"
-              message="Description of the task"
+              label="User ID"
+              message="ID of the user"
               horizontal
             >
               <b-input
-                v-model="form.description"
-                placeholder="e.g. You are required to create component datagrids..."
+                v-model="form.user_id"
+                placeholder="e.g. 3434343"
                 required
               />
             </b-field>
             <b-field
-              label="Project"
-              message="Project this task belongs to"
+              label="Seller ID"
+              message="Owner of this product belongs to"
               horizontal
             >
               <b-input
-                v-model="form.project"
-                placeholder="e.g. Project A"
+                v-model="form.seller_id"
+                placeholder="e.g. 434343"
                 required
               />
             </b-field>
             <b-field
-              label="Reporter"
-              message="Creator the task"
+              label="Cost"
+              message="cost per item"
               horizontal
             >
               <b-input
-                v-model="form.reporter"
-                placeholder="e.g. Prudence Wanjau"
+                v-model="form.cost"
+                placeholder="e.g. 1200"
                 required
               />
             </b-field>
             <b-field
-              label="Assignee"
-              message="Individual working on the task"
+              label="Quantity"
+              message="Number of products to buy"
               horizontal
             >
               <b-input
-                v-model="form.assignee"
-                placeholder="e.g. Prudence Wanjau"
+                v-model="form.quantity"
+                placeholder="e.g. 20"
                 required
               />
             </b-field>
             <b-field
-              label="Status"
-              message="Task update"
+              label="Payment quantity"
+              message=""
               horizontal
             >
               <div class="select">
                 <b-select
-                  v-model="form.status"
-                  placeholder="Select a status"
+                  v-model="form.payment_status"
+                  placeholder="Select one option"
                 >
-                  <option value="Un-Assigned">
-                    Un-assigned
+                  <option value="1">
+                    Paid
                   </option>
-                  <option value="To-Do">
-                    To do
-                  </option>
-                  <option value="In Progress">
-                    In Progress
-                  </option>
-                  <option value="In Review">
-                    In Review
-                  </option>
-                  <option value="Completed">
-                    Completed
+                  <option value="0">
+                    Not Paid
                   </option>
                 </b-select>
               </div>
             </b-field>
+
             <b-field
-              label="Due Date"
+              label="Dispatch quantity"
+              message=""
               horizontal
             >
-              <b-datepicker
-                v-model="form.dueDate"
-                placeholder="Click to select..."
-                icon="calendar-today"
-                @input="dateInput"
-              />
+              <div class="select">
+                <b-select
+                  v-model="form.dispatch_status"
+                  placeholder="Select one option"
+                >
+                  <option value="1">
+                    Dispatched
+                  </option>
+                  <option value="0">
+                    Not Dispatched
+                  </option>
+                </b-select>
+              </div>
+            </b-field>
+
+            <b-field
+              label="Deliver quantity"
+              message=""
+              horizontal
+            >
+              <div class="select">
+                <b-select
+                  v-model="form.delivery_status"
+                  placeholder="Select one option"
+                >
+                  <option value="1">
+                    Delivered
+                  </option>
+                  <option value="0">
+                    Not Delivered
+                  </option>
+                </b-select>
+              </div>
             </b-field>
             <hr>
-            <b-field
-              label="Progress"
-              horizontal
-            >
-              <b-slider
-                v-model="form.progress"
-                type="is-info"
-              />
-            </b-field>
+
             <hr>
             <b-field horizontal>
               <b-button
@@ -153,77 +165,6 @@
             </b-field>
           </form>
         </card-component>
-
-        <card-component
-          v-if="isProfileExists"
-          title="Task Overview"
-          icon="account"
-          class="tile is-child"
-        >
-          <user-avatar
-            :avatar="form.avatar"
-            class="image has-max-width is-aligned-center"
-          />
-          <hr>
-          <b-field label="Name">
-            <b-input
-              :value="form.name"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Description">
-            <b-input
-              :value="form.description"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Project">
-            <b-input
-              :value="form.project"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Reporter">
-            <b-input
-              :value="form.reporter"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Assignee">
-            <b-input
-              :value="form.assignee"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Status">
-            <b-input
-              :value="form.status"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Due date">
-            <b-input
-              :value="form.dueDate"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <hr>
-          <b-field label="Progress">
-            <b-progress
-              :value="form.progress"
-              type="is-info"
-              show-value
-              format="percent"
-            />
-          </b-field>
-        </card-component>
       </tiles>
     </section>
   </div>
@@ -236,14 +177,10 @@ import TitleBar from '@/components/BaseTitleBar.vue'
 import HeroBar from '@/components/BaseHeroBar.vue'
 import Tiles from '@/components/BaseTiles.vue'
 import CardComponent from '@/components/BaseCardComponent.vue'
-import UserAvatar from '@/components/BaseUserAvatar.vue'
 
-// import vue router
-// import router from 'vue-router'
 export default defineComponent({
   name: 'OrdersForm',
   components: {
-    UserAvatar,
     CardComponent,
     Tiles,
     HeroBar,
@@ -262,14 +199,14 @@ export default defineComponent({
       loadData: '',
       form: {
         id: '',
-        name: '',
-        description: '',
-        project: '',
-        reporter: '',
-        assignee: '',
-        status: '',
-        dueDate: null,
-        progress: 0
+        product_id: '',
+        seller_id: '',
+        user_id: '',
+        cost: '',
+        quantity: '',
+        dispatch_status: '',
+        payment_status: '',
+        delivery_status: ''
       },
       createdReadable: null
     }
@@ -303,29 +240,16 @@ export default defineComponent({
 
       if (!newValue) {
         this.form.id = ''
-        this.form.name = ''
-        this.form.description = ''
-        this.form.reporter = ''
-        this.form.project = ''
-        this.form.assignee = ''
-        this.form.status = ''
-        this.form.progress = 0
-        this.form.dueDate = null
+        this.form.product_id = ''
+        this.form.user_id = ''
+        this.form.seller_id = ''
+        this.form.cost = ''
+        this.form.quantity = ''
+        this.form.payment_status = ''
+        this.form.dispatch_status = ''
+        this.form.delivery_status = ''
       } else {
         this.getData()
-      }
-    },
-    'form.status' (newValue) {
-      if (newValue === 'Un-Assigned') {
-        this.form.progress = 0
-      } else if (newValue === 'To-Do') {
-        this.form.progress = 25
-      } else if (newValue === 'In Progress') {
-        this.form.progress = 50
-      } else if (newValue === 'In Review') {
-        this.form.progress = 75
-      } else if (newValue === 'Completed') {
-        this.form.progress = 100
       }
     }
   },
@@ -341,14 +265,14 @@ export default defineComponent({
         if (item) {
           this.isProfileExists = true
           this.form.id = item.id
-          this.form.name = item.name
-          this.form.description = item.description
-          this.form.project = item.project
-          this.form.reporter = item.reporter
-          this.form.assignee = item.assignee
-          this.form.status = item.status
-          this.form.dueDate = item.dueDate
-          this.form.progress = item.progress
+          this.form.product_id = item.product_id
+          this.form.seller_id = item.seller_id
+          this.form.user_id = item.user_id
+          this.form.cost = item.cost
+          this.form.quantity = item.quantity
+          this.form.dispatch_status = item.dispatch_status
+          this.form.payment_status = item.payment_status
+          this.form.delivery_status = item.delivery_status
         }
       } else {
         this.$router.push({ name: 'order.new' })
@@ -359,14 +283,14 @@ export default defineComponent({
     },
     async submit () {
       const orderData = {
-        name: this.form.name,
-        description: this.form.description,
-        reporter: this.form.reporter,
-        project: this.form.project,
-        assignee: this.form.assignee,
-        status: this.form.status,
-        progress: this.form.progress,
-        dueDate: this.form.dueDate
+        product_id: this.form.product_id,
+        user_id: this.form.user_id,
+        seller_id: this.form.seller_id,
+        cost: this.form.cost,
+        quantity: this.form.quantity,
+        payment_status: this.form.payment_status,
+        dispatch_status: this.form.dispatch_status,
+        delivery_status: this.form.delivery_status
       }
       const updateOrder = {
         orderId: this.$route.params.id,

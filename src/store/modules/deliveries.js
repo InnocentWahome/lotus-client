@@ -46,6 +46,8 @@ export default {
         url: '/deliveries',
         data: payload
       })
+      console.log('this is from createDelivery', response)
+
       return response
     },
     async updateDelivery ({ commit }, payload) {
@@ -54,6 +56,10 @@ export default {
         url: `/deliveries/${payload.deliveryId}`,
         data: payload.deliveries
       })
+      console.log('data to update', payload.deliveries)
+      console.log('id to update', payload.deliveryId)
+
+      console.log('this is from updateDelivery', response)
       return response
     },
     async deleteDelivery ({ commit }, payload) {

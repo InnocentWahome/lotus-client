@@ -34,26 +34,7 @@
           label="Users"
         />
       </tiles>
-      <div class="column">
-        <card-component
-          title="System Overlook (Totals)"
-          icon="finance"
-          header-icon="reload"
-          @header-icon-click="PieChartData"
-        >
-          <div
-            v-if="pieChartData"
-            class="chart-area mediaWahome"
-          >
-            <pie-chart
-              :chart-data="pieChartData"
-              class=""
-              :chart-options="chartOptions"
-              :style="{ height: '30%', width: '30%' }"
-            />
-          </div>
-        </card-component>
-      </div>
+      Here is where the system desciption will be for each user
     </section>
   </div>
 </template>
@@ -64,49 +45,24 @@ import * as chartConfig from '@/components/charts/chart.config.js'
 import HeroBar from '@/components/BaseHeroBar.vue'
 import Tiles from '@/components/BaseTiles.vue'
 import CardWidget from '@/components/BaseCardWidget.vue'
-import CardComponent from '@/components/BaseCardComponent.vue'
-import PieChart from '@/components/charts/PieChart.vue'
 
 export default defineComponent({
   name: 'Home',
   components: {
-    CardComponent,
     CardWidget,
     Tiles,
-    HeroBar,
-    PieChart
+    HeroBar
   },
   data () {
     return {
       userRole: this.$store.state.authentication.role,
       titleStackEmployee: ['Employee', 'Dashboard'],
       titleStackAdmin: ['Admin', 'Dashboard'],
-      lineChartData: null,
-      barChartData: chartConfig.barChartData(),
-      pieChartData: null,
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: true,
-        scales: {
-          y: {
-            display: true
-          },
-          x: {
-            display: true
-          }
-        },
-        plugins: {
-          legend: {
-            display: true
-          }
-        }
-      }
+      pieChartData: null
     }
   },
   async mounted () {
     this.$store.dispatch('authentication/getUser')
-    this.LineChartData()
-    this.BarChartData()
     this.PieChartData()
     await this.$buefy.snackbar.open({
       message: 'Welcome back ' + this.$store.state.authentication.firstName,
@@ -120,12 +76,6 @@ export default defineComponent({
     this.$store.dispatch('users/getAllUsers')
   },
   methods: {
-    LineChartData () {
-      this.lineChartData = chartConfig.lineChartData()
-    },
-    BarChartData () {
-      this.barChartData = chartConfig.barChartData()
-    },
     PieChartData () {
       this.pieChartData = chartConfig.pieChartData()
     }

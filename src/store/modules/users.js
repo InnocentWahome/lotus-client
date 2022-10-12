@@ -35,9 +35,9 @@ export default {
       return response
     },
     async updateUser ({ commit }, payload) {
-      const response = await $http.Authentication({
+      const response = await $http.Api({
         method: 'PUT',
-        url: `/users/${payload.userId}`,
+        url: `/user-change/${payload.userId}`,
         data: payload.user
       })
       return response

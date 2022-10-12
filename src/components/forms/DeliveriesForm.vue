@@ -1,6 +1,5 @@
 <template>
   <div>
-    <title-bar :title-stack="titleStack" />
     <hero-bar>
       {{ heroTitle }}
       <router-link
@@ -12,11 +11,6 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <notification class="is-info">
-        <div>
-          <span><b>Quick tip:</b> To mark a delivery as completely done, use the "Terminated" option</span>
-        </div>
-      </notification>
       <tiles>
         <card-component
           :title="formCardTitle"
@@ -25,7 +19,7 @@
         >
           <form @submit.prevent="submit">
             <b-field
-              label="ID"
+              label="Delivery ID"
               horizontal
             >
               <b-input
@@ -35,115 +29,88 @@
               />
             </b-field>
             <hr>
-            <b-field
-              label="Delivery logo"
-              horizontal
-            >
-              <file-picker type="is-info" />
-            </b-field>
             <hr>
             <b-field
-              label="Name"
-              message="Delivery name"
+              label="Order ID"
+              message="Order ID"
               horizontal
             >
               <b-input
-                v-model="form.name"
-                placeholder="e.g. Delivery A"
+                v-model="form.order_id"
+                placeholder="e.g. 423"
               />
             </b-field>
             <b-field
-              label="Description"
-              message="Delivery description"
+              label="Customer ID"
+              message="Customer ID"
               horizontal
             >
               <b-input
-                v-model="form.description"
-                placeholder="e.g. Provide marketing solutions to freelancers"
+                v-model="form.user_id"
+                placeholder="e.g. The ID of the customer"
               />
             </b-field>
+
             <b-field
-              label="Leader"
-              message=""
-              horizontal
-            >
-              <b-input v-model="form.leader" />
-            </b-field>
-            <b-field
-              label="Category"
+              label="Payment Status"
               message=""
               horizontal
             >
               <div class="select">
                 <b-select
-                  v-model="form.category"
-                  placeholder="Select a category"
+                  v-model="form.payment_status"
+                  placeholder="Select one option"
                 >
-                  <option value="Blockchain">
-                    Blockchain
+                  <option value="1">
+                    Paid
                   </option>
-                  <option value="Website">
-                    Website
-                  </option>
-                  <option value="Application">
-                    Application
+                  <option value="0">
+                    Not Paid
                   </option>
                 </b-select>
               </div>
             </b-field>
+
             <b-field
-              label="Team"
-              message=""
-              horizontal
-            >
-              <b-input v-model="form.team" />
-            </b-field>
-            <b-field
-              label="Status"
+              label="Dispatch Status"
               message=""
               horizontal
             >
               <div class="select">
                 <b-select
-                  v-model="form.status"
-                  placeholder="Select a status"
+                  v-model="form.dispatch_status"
+                  placeholder="Select one option"
                 >
-                  <option value="Initiated">
-                    Initiated
+                  <option value="1">
+                    Dispatched
                   </option>
-                  <option value="In-Progress">
-                    In Progress
-                  </option>
-                  <option value="Completed">
-                    Completed
-                  </option>
-                  <option value="Terminated">
-                    Terminated
+                  <option value="0">
+                    Not Dispatched
                   </option>
                 </b-select>
               </div>
             </b-field>
+
             <b-field
-              label="Estimated end date"
+              label="Deliver Status"
+              message=""
               horizontal
             >
-              <b-datepicker
-                v-model="form.endDate"
-                placeholder="Click to select..."
-                icon="calendar-today"
-                @input="dateInput"
-              />
+              <div class="select">
+                <b-select
+                  v-model="form.delivery_status"
+                  placeholder="Select one option"
+                >
+                  <option value="1">
+                    Delivered
+                  </option>
+                  <option value="0">
+                    Not Delivered
+                  </option>
+                </b-select>
+              </div>
             </b-field>
-            <hr>
-            <b-field
-              label="Progress"
-              horizontal
-            >
-              <b-slider
-                v-model="form.progress"
-                type="is-info"
-              />
-            </b-field>
+
             <hr>
             <b-field horizontal>
               <b-button
@@ -163,76 +130,6 @@
             </b-field>
           </form>
         </card-component>
-        <card-component
-          v-if="isProfileExists"
-          title="Delivery Profile"
-          icon="account"
-          class="tile is-child"
-        >
-          <user-avatar
-            :avatar="form.avatar"
-            class="image has-max-width is-aligned-center"
-          />
-          <hr>
-          <b-field label="Name">
-            <b-input
-              :value="form.name"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Description">
-            <b-input
-              :value="form.Description"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Leader">
-            <b-input
-              :value="form.leader"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Category">
-            <b-input
-              :value="form.category"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Team">
-            <b-input
-              :value="form.team"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Status">
-            <b-input
-              :value="form.status"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="End date">
-            <b-input
-              :value="form.endDate"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <hr>
-          <b-field label="Progress">
-            <b-progress
-              :value="form.progress"
-              type="is-info"
-              show-value
-              format="percent"
-            />
-          </b-field>
-        </card-component>
       </tiles>
     </section>
   </div>
@@ -241,24 +138,16 @@
 <script>
 import { defineComponent } from '@vue/composition-api'
 import { mapState } from 'vuex'
-import TitleBar from '@/components/BaseTitleBar.vue'
 import HeroBar from '@/components/BaseHeroBar.vue'
 import Tiles from '@/components/BaseTiles.vue'
 import CardComponent from '@/components/BaseCardComponent.vue'
-import FilePicker from '@/components/BaseFilePicker.vue'
-import UserAvatar from '@/components/BaseUserAvatar.vue'
-import Notification from '@/components/BaseNotification.vue'
 
 export default defineComponent({
   name: 'DeliveriesForm',
   components: {
-    UserAvatar,
-    FilePicker,
     CardComponent,
     Tiles,
-    HeroBar,
-    TitleBar,
-    Notification
+    HeroBar
   },
 
   props: {
@@ -272,14 +161,11 @@ export default defineComponent({
       isProfileExists: false,
       isLoading: false,
       form: {
-        name: '',
-        category: '',
-        description: '',
-        leader: '',
-        status: '',
-        team: '',
-        endDate: null,
-        progress: ''
+        user_id: '',
+        order_id: '',
+        dispatch_status: '',
+        payment_status: '',
+        delivery_status: ''
       },
       createdReadable: null
     }
@@ -315,27 +201,13 @@ export default defineComponent({
 
       if (!newValue) {
         this.form.id = ''
-        this.form.name = ''
-        this.form.description = ''
-        this.form.category = ''
-        this.form.leader = ''
-        this.form.team = ''
-        this.form.status = ''
-        this.form.endDate = null
-        this.form.progress = ''
+        this.form.order_id = ''
+        this.form.user_id = ''
+        this.form.payment_status = ''
+        this.form.dispatch_status = ''
+        this.form.delivery_status = ''
       } else {
         this.getData()
-      }
-    },
-    'form.status' (newValue) {
-      if (newValue === 'Initiated') {
-        this.form.progress = 25
-      } else if (newValue === 'In-Progress') {
-        this.form.progress = 50
-      } else if (newValue === 'Completed') {
-        this.form.progress = 75
-      } else if (newValue === 'Terminated') {
-        this.form.progress = 100
       }
     }
   },
@@ -352,14 +224,11 @@ export default defineComponent({
         if (item) {
           this.isProfileExists = true
           this.form.id = item.id
-          this.form.name = item.name
-          this.form.description = item.description
-          this.form.category = item.category
-          this.form.leader = item.leader
-          this.form.team = item.team
-          this.form.status = item.status
-          this.form.endDate = item.endDate
-          this.form.progress = item.progress
+          this.form.order_id = item.order_id
+          this.form.user_id = item.user_id
+          this.form.payment_status = item.payment_status
+          this.form.dispatch_status = item.dispatch_status
+          this.form.delivery_status = item.delivery_status
         }
       } else {
         this.$router.push({ name: 'deliveries.new' })
@@ -370,19 +239,18 @@ export default defineComponent({
     },
     submit () {
       const newDelivery = {
-        name: this.form.name,
-        description: this.form.description,
-        category: this.form.category,
-        leader: this.form.leader,
-        team: this.form.team,
-        status: this.form.status,
-        endDate: this.form.endDate,
-        progress: this.form.progress
+        order_id: this.form.order_id,
+        user_id: this.form.user_id,
+        payment_status: this.form.payment_status,
+        dispatch_status: this.form.dispatch_status,
+        delivery_status: this.form.delivery_status
       }
       const updateDelivery = {
         deliveryId: this.$route.params.id,
-        delivery: this.form
+        deliveries: this.form
       }
+      console.log('delivery item form', this.form)
+      console.log('deliveryId', this.$route.params.id)
       if (this.$route.params.id) {
         this.$store
           .dispatch('deliveries/updateDelivery', updateDelivery)

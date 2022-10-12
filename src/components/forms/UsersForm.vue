@@ -12,11 +12,6 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <notification class="is-info">
-        <div>
-          <span><b>Update Employee info.</b> Employees will be notified whenever their data changes</span>
-        </div>
-      </notification>
       <tiles>
         <card-component
           :title="formCardTitle"
@@ -35,12 +30,6 @@
               />
             </b-field>
             <hr>
-            <b-field
-              label="Profile"
-              horizontal
-            >
-              <file-picker type="is-info" />
-            </b-field>
             <hr>
             <b-field
               label="First Name"
@@ -97,11 +86,14 @@
                   v-model="form.role"
                   placeholder="Select a role"
                 >
-                  <option value="Employee">
-                    Employee
+                  <option value="Super-Admin">
+                    Super-Admin
                   </option>
-                  <option value="Admin">
-                    Admin
+                  <option value="Seller">
+                    Seller
+                  </option>
+                  <option value="Buyer">
+                    Buyer
                   </option>
                 </b-select>
               </div>
@@ -129,60 +121,12 @@
               <b-button
                 type=""
                 :loading="isLoading"
-                @click="$router.push('/dashboard/employees')"
+                @click="$router.push('/dashboard/users')"
               >
                 Back
               </b-button>
             </b-field>
           </form>
-        </card-component>
-        <card-component
-          v-if="isProfileExists"
-          title="Employee Profile"
-          icon="account"
-          class="tile is-child"
-        >
-          <user-avatar
-            :avatar="form.avatar"
-            class="image has-max-width is-aligned-center"
-          />
-          <hr>
-          <b-field label="First Name">
-            <b-input
-              :value="form.firstName"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Last Name">
-            <b-input
-              :value="form.lastName"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Email">
-            <b-input
-              :value="form.email"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Role">
-            <b-input
-              :value="form.role"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Phone Number">
-            <b-input
-              :value="form.phoneNumber"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <hr>
         </card-component>
       </tiles>
     </section>
@@ -192,25 +136,18 @@
 <script>
 import { defineComponent } from '@vue/composition-api'
 import { mapState } from 'vuex'
-// import find from 'lodash/find'
 import TitleBar from '@/components/BaseTitleBar.vue'
 import HeroBar from '@/components/BaseHeroBar.vue'
 import Tiles from '@/components/BaseTiles.vue'
 import CardComponent from '@/components/BaseCardComponent.vue'
-import FilePicker from '@/components/BaseFilePicker.vue'
-import UserAvatar from '@/components/BaseUserAvatar.vue'
-import Notification from '@/components/BaseNotification.vue'
-// import bcrypt from 'bcryptjs'
+
 export default defineComponent({
-  name: 'EmployeesForm',
+  name: 'UsersForm',
   components: {
-    UserAvatar,
-    FilePicker,
     CardComponent,
     Tiles,
     HeroBar,
-    TitleBar,
-    Notification
+    TitleBar
   },
   props: {
     id: {
@@ -228,7 +165,7 @@ export default defineComponent({
         lastName: '',
         email: '',
         password: '',
-        role: 'Employee',
+        role: '',
         phoneNumber: ''
       },
       createdReadable: null
@@ -237,24 +174,24 @@ export default defineComponent({
   computed: {
     titleStack () {
       return [
-        'Employees',
-        this.isProfileExists ? this.form.firstName + ' ' + this.form.lastName : 'New Employee'
+        'Users',
+        this.isProfileExists ? this.form.firstName + ' ' + this.form.lastName : 'New User'
       ]
     },
     heroTitle () {
-      return this.isProfileExists ? this.form.name : 'Create Employee'
+      return this.isProfileExists ? this.form.name : 'Create User'
     },
     heroRouterLinkTo () {
-      return this.isProfileExists ? { name: 'admin-employee.new' } : { name: 'Employees' }
+      return this.isProfileExists ? { name: 'user.new' } : { name: 'Users' }
     },
     heroRouterLinkLabel () {
-      return this.isProfileExists ? 'New Employee' : 'Dashboard'
+      return this.isProfileExists ? 'New User' : 'Dashboard'
     },
     formCardTitle () {
-      return this.isProfileExists ? 'Edit Employee' : 'Create Employee'
+      return this.isProfileExists ? 'Edit User' : 'Create User'
     },
     ...mapState({
-      employees: state => state.employees.employees
+      users: state => state.users.users
     })
   },
   watch: {
@@ -281,7 +218,7 @@ export default defineComponent({
   methods: {
     getData () {
       if (this.$route.params.id) {
-        const item = this.employees.find((employee) => employee.id === this.$route.params.id)
+        const item = this.users.find((user) => user.id === this.$route.params.id)
 
         if (item) {
           this.isProfileExists = true
@@ -295,7 +232,7 @@ export default defineComponent({
           this.createdReadable = new Date(item.created_mm_dd_yyyy).toLocaleDateString()
         }
       } else {
-        this.$router.push({ name: 'admin-employee.new' })
+        this.$router.push({ name: 'user.new' })
       }
     },
     dateInput (v) {
@@ -305,7 +242,7 @@ export default defineComponent({
       // const password = 'password'
       // const saltRounds = 2
       // const hashedPassword = bcrypt.hash(password, saltRounds)
-      const newEmployee = {
+      const newUser = {
         firstName: this.form.firstName,
         lastName: this.form.lastName,
         email: this.form.email,
@@ -313,20 +250,20 @@ export default defineComponent({
         phoneNumber: this.form.phoneNumber,
         password: this.form.password
       }
-      const updateEmployee = {
-        employeeId: this.$route.params.id,
-        employee: this.form
+      const updateUser = {
+        userId: this.$route.params.id,
+        user: this.form
       }
       if (this.$route.params.id) {
-        this.$store.dispatch('employees/updateEmployee', updateEmployee)
+        this.$store.dispatch('users/updateUser', updateUser)
         this.$buefy.snackbar.open({
-          message: 'Successfully updated the Employee',
+          message: 'Successfully updated the User',
           queue: true
         })
       } else {
-        this.$store.dispatch('employees/createEmployee', newEmployee)
+        this.$store.dispatch('users/createUser', newUser)
         this.$buefy.snackbar.open({
-          message: 'Successfully created the Employee',
+          message: 'Successfully created the User',
           queue: true
         })
       }

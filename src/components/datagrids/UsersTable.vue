@@ -77,7 +77,7 @@
           class="buttons is-right no-wrap"
         >
           <router-link
-            :to="{name:'admin-deliveries.edit', params: {id: props.row.id}}"
+            :to="{name:'user.edit', params: {id: props.row.id}}"
             class="button is-small"
           >
             <b-icon

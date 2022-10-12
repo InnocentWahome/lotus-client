@@ -1,6 +1,5 @@
 <template>
   <div>
-    <title-bar :title-stack="titleStack" />
     <hero-bar>
       {{ heroTitle }}
       <router-link
@@ -12,11 +11,6 @@
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
-      <notification class="is-info">
-        <div>
-          <span><b>Efficient teams are made of 5 or less members.</b>Team work makes the dream work!</span>
-        </div>
-      </notification>
       <tiles>
         <card-component
           :title="formCardTitle"
@@ -35,65 +29,59 @@
               />
             </b-field>
             <hr>
-            <b-field
-              label="Team Avatar"
-              horizontal
-            >
-              <file-picker type="is-info" />
-            </b-field>
             <hr>
             <b-field
-              label="Name"
-              message="Team name"
+              label="Product Name"
+              message="Product name"
               horizontal
             >
               <b-input
                 v-model="form.name"
-                placeholder="e.g. Team One"
+                placeholder="e.g. Product One"
                 required
               />
             </b-field>
             <b-field
-              label="Description"
-              message="Team description"
+              label="Product Description"
+              message="Product description"
               horizontal
             >
               <b-input
                 v-model="form.description"
-                placeholder="e.g. This team solely works on Project A"
+                placeholder="e.g. This product is like this"
                 required
               />
             </b-field>
             <b-field
-              label="Members"
-              message="Members of the team"
+              label="Quantity in Stock"
+              message="Stock"
               horizontal
             >
               <b-input
-                v-model="form.members"
-                placeholder="e.g. Prudence Wanjau & John Kamau"
+                v-model="form.quantity"
+                placeholder="e.g. 433"
                 required
               />
             </b-field>
             <b-field
-              label="Leader"
-              message="Team's captain"
+              label="Price per unit"
+              message="$"
               horizontal
             >
               <b-input
-                v-model="form.leader"
-                placeholder="e.g. Prudence Wanjau"
+                v-model="form.price"
+                placeholder="e.g. 100"
                 required
               />
             </b-field>
             <b-field
-              label="Responsibilities"
-              message="Duties of the team"
+              label="Image url"
+              message="https:///...."
               horizontal
             >
               <b-input
-                v-model="form.responsibilities"
-                placeholder="e.g. Devops & SSR"
+                v-model="form.image"
+                placeholder=""
                 required
               />
             </b-field>
@@ -116,53 +104,6 @@
             </b-field>
           </form>
         </card-component>
-        <card-component
-          v-if="isProfileExists"
-          title="Team Profile"
-          icon="account"
-          class="tile is-child"
-        >
-          <user-avatar
-            :avatar="form.avatar"
-            class="image has-max-width is-aligned-center"
-          />
-          <hr>
-          <b-field label="Name">
-            <b-input
-              :value="form.name"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Description">
-            <b-input
-              :value="form.description"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Members">
-            <b-input
-              :value="form.members"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Leader">
-            <b-input
-              :value="form.leader"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field label="Responsibilities">
-            <b-input
-              :value="form.responsibilities"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-        </card-component>
       </tiles>
     </section>
   </div>
@@ -171,25 +112,16 @@
 <script>
 import { defineComponent } from '@vue/composition-api'
 import { mapState } from 'vuex'
-// import find from 'lodash/find'
-import TitleBar from '@/components/BaseTitleBar.vue'
 import HeroBar from '@/components/BaseHeroBar.vue'
 import Tiles from '@/components/BaseTiles.vue'
 import CardComponent from '@/components/BaseCardComponent.vue'
-import FilePicker from '@/components/BaseFilePicker.vue'
-import UserAvatar from '@/components/BaseUserAvatar.vue'
-import Notification from '@/components/BaseNotification.vue'
 
 export default defineComponent({
   name: 'ProductsForm',
   components: {
-    UserAvatar,
-    FilePicker,
     CardComponent,
     Tiles,
-    HeroBar,
-    TitleBar,
-    Notification
+    HeroBar
   },
   props: {
     id: {
@@ -205,9 +137,10 @@ export default defineComponent({
         id: '',
         name: '',
         description: '',
-        members: '',
-        leader: '',
-        responsibilities: ''
+        quantity: '',
+        price: '',
+        image: '',
+        user_id: ''
       },
       createdReadable: null
     }
@@ -243,10 +176,10 @@ export default defineComponent({
         this.form.id = ''
         this.form.name = ''
         this.form.description = ''
-        this.form.members = ''
-        this.form.leader = ''
-        this.form.responsibilities = ''
-        this.createdReadable = new Date().toLocaleDateString()
+        this.form.quantity = ''
+        this.form.price = ''
+        this.form.image = ''
+        this.form.user_id = ''
       } else {
         this.getData()
       }
@@ -265,11 +198,10 @@ export default defineComponent({
           this.form.id = item.id
           this.form.name = item.name
           this.form.description = item.description
-          this.form.leader = item.leader
-          this.form.members = item.members
-          this.form.responsibilities = item.responsibilities
-
-          this.createdReadable = new Date(item.created_mm_dd_yyyy).toLocaleDateString()
+          this.form.price = item.price
+          this.form.quantity = item.quantity
+          this.form.image = item.image
+          this.form.user_id = this.$store.state.authentication.userId
         }
       } else {
         this.$router.push({ name: 'product.new' })
@@ -281,10 +213,11 @@ export default defineComponent({
     submit () {
       const productData = {
         description: this.form.description,
-        members: this.form.members,
-        leader: this.form.leader,
-        responsibilities: this.form.responsibilities,
-        name: this.form.name
+        quantity: this.form.quantity,
+        price: this.form.price,
+        image: this.form.image,
+        name: this.form.name,
+        user_id: this.$store.state.authentication.userId
 
       }
       const updateProduct = {

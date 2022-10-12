@@ -154,29 +154,28 @@ const routes = [
     },
     {
       meta: {
-        title: 'Edit Employee',
-        requiresAuth: true
+        title: 'Edit User'
       },
-      path: '/admin-employee/edit/:id',
-      name: 'admin-employee.edit',
+      path: '/user/edit/:id',
+      name: 'user.edit',
       component: () =>
         import(
           /* webpackChunkName: "client-form" */
-          '@/components/forms/Users.vue'
+          '@/components/forms/UsersForm.vue'
         ),
       props: true
     },
     {
       meta: {
-        title: 'New Employee',
+        title: 'New User',
         requiresAuth: true
       },
-      path: '/admin-employee/new',
-      name: 'admin-employee.new',
+      path: '/user/new',
+      name: 'user.new',
       component: () =>
         import(
           /* webpackChunkName: "client-form" */
-          '@/components/forms/Users.vue'
+          '@/components/forms/UsersForm.vue'
         )
     }
     ],
