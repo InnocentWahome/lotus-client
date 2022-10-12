@@ -105,6 +105,14 @@
             />
           </b-button>
         </div>
+        <div v-if="userRole == 'Buyer'">
+          <router-link
+            :to="{name:'order.new', params: {id: props.row.id}}"
+            class="button is-small"
+          >
+            ORDER
+          </router-link>
+        </div>
       </b-table-column>
       <section
         slot="empty"
@@ -167,14 +175,11 @@ export default defineComponent({
       const role = this.$store.state.authentication.role
       const userId = this.$store.state.authentication.userId
       console.log(role, userId)
-      if (role === 'Super-Admin') {
+      if (role === 'Super-Admin' || role === 'Buyer') {
         this.$store.dispatch('products/getAllProducts')
       } else {
         this.$store.dispatch('products/getSellersProducts', userId)
       }
-      // .then((response) => {
-      //   console.log(response)
-      // })
     },
     trashModalOpen (obj) {
       this.isModalActive = true

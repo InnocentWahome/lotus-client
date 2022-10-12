@@ -180,8 +180,10 @@ export default defineComponent({
       const userId = this.$store.state.authentication.userId
       if (role === 'Super-Admin') {
         this.$store.dispatch('orders/getAllOrders')
-      } else {
+      } else if (role === 'Seller') {
         this.$store.dispatch('orders/getSellersOrders', userId)
+      } else if (role === 'Buyer') {
+        this.$store.dispatch('orders/getBuyersOrders', userId)
       }
     },
 

@@ -73,7 +73,7 @@
         cell-class="is-actions-cell"
       >
         <div
-          v-if="userRole == 'Super-Admin' || userRole == 'Seller'"
+          v-if="userRole == 'Super-Admin'"
           class="buttons is-right no-wrap"
         >
           <router-link
@@ -134,6 +134,7 @@ export default defineComponent({
   },
   data () {
     return {
+      userRole: this.$store.state.authentication.role,
       checkedRows: [],
       isModalActive: false,
       trashObject: null

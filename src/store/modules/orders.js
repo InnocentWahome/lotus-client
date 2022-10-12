@@ -35,6 +35,15 @@ export default {
       commit('SET_ORDERS_COUNT', response.data?.data.length)
       return response
     },
+    async getBuyersOrders ({ commit }, payload) {
+      const response = await $http.Api({
+        method: 'GET',
+        url: `/order/buyers-orders/${payload}`
+      })
+      commit('SET_ORDERS', response.data?.data)
+      commit('SET_ORDERS_COUNT', response.data?.data.length)
+      return response
+    },
     async createOrder ({ commit }, payload) {
       const response = await $http.Api({
         method: 'POST',
