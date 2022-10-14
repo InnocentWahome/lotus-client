@@ -34,7 +34,32 @@
           label="Users"
         />
       </tiles>
-      Here is where the system desciption will be for each user
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Description</th>
+            <th>Permissions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Super-Admin</th>
+            <td>Seller</td>
+            <td>Buyer</td>
+          </tr>
+          <tr>
+            <th>Seller</th>
+            <td>Buyer</td>
+            <td>Super-Admin</td>
+          </tr>
+          <tr>
+            <th>Buyer</th>
+            <td>Super-Admin</td>
+            <td>Seller</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </div>
 </template>

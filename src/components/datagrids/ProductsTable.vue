@@ -115,7 +115,7 @@
         </div>
         <div v-if="userRole == 'Buyer'">
           <router-link
-            :to="{name:'order.new', params: {id: props.row.id}}"
+            :to="{name:'order.new', params: {productId: props.row.id, sellerId: props.row.user_id, cost: props.row.price}}"
             class="button is-small"
           >
             ORDER

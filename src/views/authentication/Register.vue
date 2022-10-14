@@ -66,6 +66,22 @@
         />
       </b-field>
 
+      <b-field label="Role">
+        <div class="select">
+          <b-select
+            v-model="role"
+            placeholder="Select one option"
+          >
+            <option value="Buyer">
+              Buyer
+            </option>
+            <option value="Seller">
+              Seller
+            </option>
+          </b-select>
+        </div>
+      </b-field>
+
       <!-- <b-field>
         <b-checkbox
           v-model="remember"
@@ -117,7 +133,8 @@ export default defineComponent({
       password: '',
       confirmPassword: '',
       phoneNumber: '',
-      error: ''
+      error: '',
+      role: ''
     }
   },
   methods: {
@@ -127,7 +144,8 @@ export default defineComponent({
         lastName: this.lastName,
         phoneNumber: this.phoneNumber,
         email: this.email,
-        password: this.password
+        password: this.password,
+        role: this.role
       }
       if (this.password !== this.confirmPassword) {
         this.$buefy.snackbar.open({

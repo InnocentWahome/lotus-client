@@ -86,7 +86,7 @@
               />
             </b-field>
             <b-field
-              label="Payment quantity"
+              label="Payment status"
               message=""
               horizontal
             >
@@ -106,7 +106,7 @@
             </b-field>
 
             <b-field
-              label="Dispatch quantity"
+              label="Dispatch status"
               message=""
               horizontal
             >
@@ -126,7 +126,7 @@
             </b-field>
 
             <b-field
-              label="Deliver quantity"
+              label="Deliver status"
               message=""
               horizontal
             >
@@ -256,6 +256,11 @@ export default defineComponent({
   mounted () {
     this.loadData = this.$store.state.orders.ordersCount
     this.getData()
+    const initialData = this.$route.params
+    this.form.product_id = initialData.productId
+    this.form.user_id = this.$store.state.authentication.userId
+    this.form.seller_id = initialData.sellerId
+    this.form.cost = initialData.cost
   },
   methods: {
     getData () {

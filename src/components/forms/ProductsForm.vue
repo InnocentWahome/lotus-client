@@ -187,6 +187,7 @@ export default defineComponent({
   },
   mounted () {
     this.getData()
+    this.form.user_id = this.$store.state.authentication.userId
   },
   methods: {
     getData () {

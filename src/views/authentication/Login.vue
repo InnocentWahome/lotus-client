@@ -44,7 +44,9 @@
       </b-field>
       {{ error }}
       <hr>
-
+      <p class="pb-3">
+        Don't have an account? <a href="/register">Create one</a>
+      </p>
       <b-field grouped>
         <div class="control">
           <b-button

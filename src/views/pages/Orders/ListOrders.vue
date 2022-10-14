@@ -4,16 +4,18 @@
       <span style="padding-right: 20px; padding-bottom: 2px;">
         Orders
       </span>
-      <router-link
-        :to="{ name: 'order.new' }"
-        class="button is-small"
-        style="float: right !important;"
-      >
-        <b-icon
-          icon="plus"
-          size="is-small"
-        />
-      </router-link>
+      <div v-if="$store.state.authentication.role !== 'Buyer'">
+        <router-link
+          :to="{ name: 'order.new' }"
+          class="button is-small"
+          style="float: right !important;"
+        >
+          <b-icon
+            icon="plus"
+            size="is-small"
+          />
+        </router-link>
+      </div>
     </hero-bar>
     <section class="section is-main-section">
       <card-component
