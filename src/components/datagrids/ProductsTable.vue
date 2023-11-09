@@ -3,7 +3,7 @@
   <div>
     <modal-box
       :is-active="isModalActive"
-      :trash-object-name="trashObject ? trashObject.name : null "
+      :trash-object-name="trashObject ? trashObject.name : null"
       @confirm="trashConfirm"
       @cancel="trashCancel"
     />
@@ -94,7 +94,7 @@
           class="buttons is-right no-wrap"
         >
           <router-link
-            :to="{name:'product.edit', params: {id: props.row.id}}"
+            :to="{ name: 'product.edit', params: { id: props.row.id } }"
             class="button is-small"
           >
             <b-icon
@@ -113,9 +113,19 @@
             />
           </b-button>
         </div>
+        <!-- {{ props.row }} -->
         <div v-if="userRole == 'Buyer'">
           <router-link
-            :to="{name:'order.new', params: {productId: props.row.id, sellerId: props.row.user_id, cost: props.row.price}}"
+            :to="{
+              name: 'order.new',
+              params: {
+                productId: props.row.id,
+                sellerId: props.row.user_id,
+                cost: props.row.price,
+                sellerName: props.row.user.firstName + ' ' + props.row.user.lastName,
+                productName: props.row.name,
+              },
+            }"
             class="button is-small"
           >
             ORDER
@@ -171,9 +181,8 @@ export default defineComponent({
     },
 
     ...mapState({
-      products: state => state.products.products
+      products: (state) => state.products.products
     })
-
   },
   created () {
     this.getProducts()

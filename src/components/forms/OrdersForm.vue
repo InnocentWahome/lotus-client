@@ -31,17 +31,17 @@
             </b-field>
             <hr>
             <b-field
-              label="Product ID"
+              label="Product"
               message="ID of the product"
               horizontal
             >
               <b-input
-                v-model="form.product_id"
+                v-model="form.product_name"
                 placeholder="e.g. 13232"
                 required
               />
             </b-field>
-            <b-field
+            <!-- <b-field
               label="User ID"
               message="ID of the user"
               horizontal
@@ -51,14 +51,14 @@
                 placeholder="e.g. 3434343"
                 required
               />
-            </b-field>
+            </b-field> -->
             <b-field
-              label="Seller ID"
+              label="Seller"
               message="Owner of this product belongs to"
               horizontal
             >
               <b-input
-                v-model="form.seller_id"
+                v-model="form.seller_name"
                 placeholder="e.g. 434343"
                 required
               />
@@ -70,6 +70,7 @@
             >
               <b-input
                 v-model="form.cost"
+                :readonly="userRole === 'Buyer'"
                 placeholder="e.g. 1200"
                 required
               />
@@ -106,7 +107,8 @@
             </b-field>
 
             <b-field
-              label="Dispatch status"
+              v-if="userRole !== 'Buyer'"
+              label="Dispatch status!"
               message=""
               horizontal
             >
@@ -126,6 +128,7 @@
             </b-field>
 
             <b-field
+              v-if="userRole !== 'Buyer'"
               label="Deliver status"
               message=""
               horizontal
@@ -194,6 +197,7 @@ export default defineComponent({
   },
   data () {
     return {
+      userRole: this.$store.state.authentication.role,
       isProfileExists: false,
       isLoading: false,
       loadData: '',
@@ -206,17 +210,16 @@ export default defineComponent({
         quantity: '',
         dispatch_status: '',
         payment_status: '',
-        delivery_status: ''
+        delivery_status: '',
+        product_name: '',
+        seller_name: ''
       },
       createdReadable: null
     }
   },
   computed: {
     titleStack () {
-      return [
-        'Orders',
-        this.isProfileExists ? this.form.name : 'New Order'
-      ]
+      return ['Orders', this.isProfileExists ? this.form.name : 'New Order']
     },
     heroTitle () {
       return this.isProfileExists ? this.form.name : 'Create Order'
@@ -231,7 +234,7 @@ export default defineComponent({
       return this.isProfileExists ? 'Edit Order' : 'Create Order'
     },
     ...mapState({
-      orders: state => state.orders.orders
+      orders: (state) => state.orders.orders
     })
   },
   watch: {
@@ -241,6 +244,8 @@ export default defineComponent({
       if (!newValue) {
         this.form.id = ''
         this.form.product_id = ''
+        this.form.product_name = ''
+        this.form.seller_name = ''
         this.form.user_id = ''
         this.form.seller_id = ''
         this.form.cost = ''
@@ -261,6 +266,10 @@ export default defineComponent({
     this.form.user_id = this.$store.state.authentication.userId
     this.form.seller_id = initialData.sellerId
     this.form.cost = initialData.cost
+    this.form.product_name = initialData.productName
+    this.form.seller_name = initialData.sellerName
+    this.form.dispatch_status = false
+    this.form.delivery_status = false
   },
   methods: {
     getData () {
@@ -299,7 +308,7 @@ export default defineComponent({
       }
       const updateOrder = {
         orderId: this.$route.params.id,
-        order: this.form
+        order: this.orderData
       }
       if (this.$route.params.id) {
         try {

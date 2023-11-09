@@ -37,7 +37,11 @@
         field="product_id"
         sortable
       >
-        {{ props.row.product ? "[" + props.row.product_id + "] " + props.row.product.name : props.row.product_id + ":" + props.row.product.name }}
+        {{
+          props.row.product
+            ? "[" + props.row.product_id + "] " + props.row.product.name
+            : props.row.product_id + ":" + props.row.product.name
+        }}
       </b-table-column>
       <b-table-column
         v-slot="props"
@@ -53,7 +57,11 @@
         field="userId"
         sortable
       >
-        {{ props.row.user ? "[" + props.row.user.id + "] " + props.row.user.firstName : props.row.product_id }}
+        {{
+          props.row.user
+            ? "[" + props.row.user.id + "] " + props.row.user.firstName
+            : props.row.product_id
+        }}
       </b-table-column>
       <!-- <b-table-column
         v-slot="props"
@@ -97,7 +105,17 @@
           class="buttons is-right no-wrap"
         >
           <router-link
-            :to="{ name: 'order.edit', params: { id: props.row.id } }"
+            :to="{
+              name: 'order.edit',
+              params: {
+                id: props.row.id,
+                productId: props.row.product.id,
+                productName: props.row.product.name,
+                sellerId: props.row.user_id,
+                cost: props.row.cost,
+                sellerName: props.row.user.firstName + ' ' + props.row.user.lastName,
+              },
+            }"
             class="button is-small"
           >
             <b-icon
@@ -167,9 +185,8 @@ export default defineComponent({
     },
 
     ...mapState({
-      orders: state => state.orders.orders
+      orders: (state) => state.orders.orders
     })
-
   },
   created () {
     this.getOrders()
