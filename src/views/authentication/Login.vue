@@ -57,14 +57,7 @@
             Login
           </b-button>
         </div>
-        <div class="control">
-          <router-link
-            to="/forgot-password"
-            class="button is-outlined is-black"
-          >
-            Forgot Password?
-          </router-link>
-        </div>
+        <div class="control" />
       </b-field>
       <!-- <hr> -->
     </form>
