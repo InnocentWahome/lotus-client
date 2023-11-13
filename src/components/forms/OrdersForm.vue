@@ -266,7 +266,9 @@ export default defineComponent({
     const initialData = this.$route.params
     console.log('initialData.sellerId', initialData)
     this.form.product_id = initialData.productId
-    this.form.buyer_id = initialData.buyerId
+    this.form.buyer_id = this.$store.state.authentication.role === 'Buyer'
+      ? this.$store.state.authentication.userId
+      : initialData.buyerId
     this.form.seller_id = initialData.sellerId
     this.form.cost = initialData.cost
     this.form.product_name = initialData.productName
