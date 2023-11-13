@@ -38,7 +38,7 @@ export default {
     async getSellersProducts ({ commit }, payload) {
       const response = await $http.Api({
         method: 'GET',
-        url: `/product/products/${payload}`
+        url: `/product/seller/${payload}`
       })
       commit('SET_PRODUCTS', response.data?.data)
       commit('SET_PRODUCTS_COUNT', response.data?.data.length)

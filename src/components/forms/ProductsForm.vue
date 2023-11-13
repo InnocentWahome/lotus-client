@@ -97,7 +97,7 @@
               <b-button
                 type=""
                 :loading="isLoading"
-                @click="$router.push('/dashboard/teams')"
+                @click="$router.push('/dashboard')"
               >
                 Back
               </b-button>
@@ -140,7 +140,7 @@ export default defineComponent({
         quantity: '',
         price: '',
         image: '',
-        user_id: ''
+        seller_id: ''
       },
       createdReadable: null
     }
@@ -179,7 +179,7 @@ export default defineComponent({
         this.form.quantity = ''
         this.form.price = ''
         this.form.image = ''
-        this.form.user_id = ''
+        this.form.seller_id = 0
       } else {
         this.getData()
       }
@@ -187,7 +187,7 @@ export default defineComponent({
   },
   mounted () {
     this.getData()
-    this.form.user_id = this.$store.state.authentication.userId
+    this.form.seller_id = this.$store.state.authentication.userId
   },
   methods: {
     getData () {
@@ -202,7 +202,7 @@ export default defineComponent({
           this.form.price = item.price
           this.form.quantity = item.quantity
           this.form.image = item.image
-          this.form.user_id = this.$store.state.authentication.userId
+          this.form.seller_id = this.$store.state.authentication.userId
         }
       } else {
         this.$router.push({ name: 'product.new' })
@@ -218,7 +218,7 @@ export default defineComponent({
         price: this.form.price,
         image: this.form.image,
         name: this.form.name,
-        user_id: this.$store.state.authentication.userId
+        seller_id: this.$store.state.authentication.userId
 
       }
       const updateProduct = {

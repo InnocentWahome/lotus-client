@@ -29,7 +29,7 @@ export default {
     async getSellersOrders ({ commit }, payload) {
       const response = await $http.Api({
         method: 'GET',
-        url: `/order/orders/${payload}`
+        url: `/order/sellers-orders/${payload}`
       })
       commit('SET_ORDERS', response.data?.data)
       commit('SET_ORDERS_COUNT', response.data?.data.length)

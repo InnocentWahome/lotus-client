@@ -50,14 +50,14 @@
             />
           </b-menu-list>
           <!-- Deliveries -->
-          <b-menu-list>
+          <!-- <b-menu-list>
             <b-menu-item
               v-if="userRole == 'Super-Admin' || userRole == 'Seller'"
               label="Deliveries"
               icon="link"
               href="/dashboard/deliveries"
             />
-          </b-menu-list>
+          </b-menu-list> -->
           <!-- Users -->
           <b-menu-list>
             <b-menu-item
