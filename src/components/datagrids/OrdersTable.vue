@@ -58,19 +58,19 @@
         sortable
       >
         {{
-          props.row.user
-            ? "[" + props.row.user.id + "] " + props.row.user.firstName
+          props.row.buyer
+            ? "[" + props.row.buyer.id + "] " + props.row.buyer.firstName
             : props.row.product_id
         }}
       </b-table-column>
-      <!-- <b-table-column
+      <b-table-column
         v-slot="props"
         label="Seller"
         field="sellerId"
         sortable
       >
-        {{ props.row.user ? "[" + props.row.user.id + "] " + props.row.user.firstName : props.row.product_id }}
-      </b-table-column> -->
+        {{ props.row.seller ? "[" + props.row.seller.id + "] " + props.row.seller.firstName : props.row.product_id }}
+      </b-table-column>
       <b-table-column
         v-slot="props"
         label="Payment Status"
@@ -104,25 +104,15 @@
           v-if="userRole == 'Super-Admin' || userRole == 'Seller'"
           class="buttons is-right no-wrap"
         >
-          <router-link
-            :to="{
-              name: 'order.edit',
-              params: {
-                id: props.row.id,
-                productId: props.row.product.id,
-                productName: props.row.product.name,
-                sellerId: props.row.user_id,
-                cost: props.row.cost,
-                sellerName: props.row.user.firstName + ' ' + props.row.user.lastName,
-              },
-            }"
+          <b-button
             class="button is-small"
+            @click="editOrder(props.row)"
           >
             <b-icon
               icon="account-edit"
               size="is-small"
             />
-          </router-link>
+          </b-button>
           .<b-button
             type=""
             size="is-small"
@@ -192,6 +182,20 @@ export default defineComponent({
     this.getOrders()
   },
   methods: {
+    editOrder (row) {
+      this.$router.push({
+        name: 'order.edit',
+        params: {
+          id: row.id,
+          productId: row.product.id,
+          productName: row.product.name,
+          sellerId: row.seller_id,
+          buyerId: row.buyer_id,
+          cost: row.cost,
+          sellerName: row.seller.firstName + ' ' + row.seller.lastName
+        }
+      })
+    },
     getOrders () {
       const role = this.$store.state.authentication.role
       const userId = this.$store.state.authentication.userId

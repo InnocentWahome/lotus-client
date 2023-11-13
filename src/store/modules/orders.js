@@ -53,6 +53,8 @@ export default {
       return response
     },
     async updateOrder ({ commit }, payload) {
+      console.log('called UPDATE order')
+      console.log('ORDER PAYLOAD', payload)
       const response = await $http.Api({
         method: 'PUT',
         url: `/order/${payload.orderId}`,

@@ -99,9 +99,9 @@ export default {
         url: '/user'
       })
       commit('SET_USER_ID', response.data.data.id)
-      commit('SET_FIRST_NAME', response.data.data.firstName)
+      commit('SET_FIRST_NAME', response.data.data.first_name)
       commit('SET_PHONE_NUMBER', response.data.data.phone_number)
-      commit('SET_LAST_NAME', response.data.data.lastName)
+      commit('SET_LAST_NAME', response.data.data.last_name)
       commit('SET_EMAIL', response.data.data.email)
       commit('SET_ROLE', response.data.data.role)
       commit('SET_PASSWORD', response.data.data.password)

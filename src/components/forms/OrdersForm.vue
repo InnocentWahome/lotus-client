@@ -41,17 +41,18 @@
                 required
               />
             </b-field>
-            <!-- <b-field
-              label="User ID"
-              message="ID of the user"
+            <b-field
+              v-if="userRole !== 'Buyer'"
+              label="Buyer ID"
+              message="ID of the Buyer"
               horizontal
             >
               <b-input
-                v-model="form.user_id"
-                placeholder="e.g. 3434343"
+                v-model="form.buyer_id"
+                placeholder="e.g. 12"
                 required
               />
-            </b-field> -->
+            </b-field>
             <b-field
               label="Seller"
               message="Owner of this product belongs to"
@@ -107,8 +108,8 @@
             </b-field>
 
             <b-field
-              v-if="userRole !== 'Buyer'"
-              label="Dispatch status!"
+              label="Dispatch status"
+              :disabled="userRole !== 'Buyer'"
               message=""
               horizontal
             >
@@ -128,7 +129,7 @@
             </b-field>
 
             <b-field
-              v-if="userRole !== 'Buyer'"
+              :disabled="userRole !== 'Buyer'"
               label="Deliver status"
               message=""
               horizontal
@@ -205,7 +206,7 @@ export default defineComponent({
         id: '',
         product_id: '',
         seller_id: '',
-        user_id: '',
+        buyer_id: '',
         cost: '',
         quantity: '',
         dispatch_status: '',
@@ -246,7 +247,8 @@ export default defineComponent({
         this.form.product_id = ''
         this.form.product_name = ''
         this.form.seller_name = ''
-        this.form.user_id = ''
+        this.form.seller_id = ''
+        this.form.buyer_id = ''
         this.form.seller_id = ''
         this.form.cost = ''
         this.form.quantity = ''
@@ -262,8 +264,9 @@ export default defineComponent({
     this.loadData = this.$store.state.orders.ordersCount
     this.getData()
     const initialData = this.$route.params
+    console.log('initialData.sellerId', initialData)
     this.form.product_id = initialData.productId
-    this.form.user_id = this.$store.state.authentication.userId
+    this.form.buyer_id = initialData.buyerId
     this.form.seller_id = initialData.sellerId
     this.form.cost = initialData.cost
     this.form.product_name = initialData.productName
@@ -281,7 +284,7 @@ export default defineComponent({
           this.form.id = item.id
           this.form.product_id = item.product_id
           this.form.seller_id = item.seller_id
-          this.form.user_id = item.user_id
+          this.form.buyer_id = item.buyer_id
           this.form.cost = item.cost
           this.form.quantity = item.quantity
           this.form.dispatch_status = item.dispatch_status
@@ -298,7 +301,7 @@ export default defineComponent({
     async submit () {
       const orderData = {
         product_id: this.form.product_id,
-        user_id: this.form.user_id,
+        buyer_id: this.form.buyer_id,
         seller_id: this.form.seller_id,
         cost: this.form.cost,
         quantity: this.form.quantity,
@@ -306,13 +309,37 @@ export default defineComponent({
         dispatch_status: this.form.dispatch_status,
         delivery_status: this.form.delivery_status
       }
-      const updateOrder = {
-        orderId: this.$route.params.id,
-        order: this.orderData
-      }
+      // const updateOrder = {
+      //   orderId: this.$route.params.id,
+      //   order: this.orderData
+      // }
+
+      console.log('data-----------------', {
+        product_id: this.form.product_id,
+        buyer_id: this.form.buyer_id,
+        seller_id: this.form.seller_id,
+        cost: this.form.cost,
+        quantity: this.form.quantity,
+        payment_status: this.form.payment_status,
+        dispatch_status: this.form.dispatch_status,
+        delivery_status: this.form.delivery_status
+      })
+
       if (this.$route.params.id) {
         try {
-          this.$store.dispatch('orders/updateOrder', updateOrder)
+          this.$store.dispatch('orders/updateOrder', {
+            orderId: this.$route.params.id,
+            order: {
+              product_id: this.form.product_id,
+              buyer_id: this.form.buyer_id,
+              seller_id: this.form.seller_id,
+              cost: this.form.cost,
+              quantity: this.form.quantity,
+              payment_status: this.form.payment_status,
+              dispatch_status: this.form.dispatch_status,
+              delivery_status: this.form.delivery_status
+            }
+          })
           this.$buefy.snackbar.open({
             message: 'Successfully updated the order',
             queue: true

@@ -50,7 +50,7 @@
         field="user_id"
         sortable
       >
-        {{ props.row.user_id }}
+        {{ props.row.seller_id }}
       </b-table-column>
       <b-table-column
         v-slot="props"
@@ -58,7 +58,7 @@
         field="user.firstName"
         sortable
       >
-        {{ props.row.user ? props.row.user.firstName : "-" }}
+        {{ props.row.seller ? props.row.seller.firstName + " " + props.row.seller.lastName : "-" }}
       </b-table-column>
       <b-table-column
         v-slot="props"
@@ -113,9 +113,11 @@
             />
           </b-button>
         </div>
-        <!-- {{ props.row }} -->
-        <div v-if="userRole == 'Buyer'">
-          <router-link
+        <div v-if="userRole === 'Buyer'">
+          <!-- <b-button>
+            ORDER
+          </b-button> -->
+          <!-- <router-link
             :to="{
               name: 'order.new',
               params: {
@@ -129,7 +131,13 @@
             class="button is-small"
           >
             ORDER
-          </router-link>
+          </router-link> -->
+          <button
+            class="button is-small"
+            @click="placeOrder(props.row)"
+          >
+            ORDER
+          </button>
         </div>
       </b-table-column>
       <section
@@ -186,8 +194,21 @@ export default defineComponent({
   },
   created () {
     this.getProducts()
+    console.log('userRole', this.$store.state.authentication.role)
   },
   methods: {
+    placeOrder (row) {
+      this.$router.push({
+        name: 'order.new',
+        params: {
+          productId: row.id,
+          sellerId: row.seller_id,
+          cost: row.price,
+          sellerName: row.seller.firstName + ' ' + row.seller.lastName,
+          productName: row.name
+        }
+      })
+    },
     getProducts () {
       const role = this.$store.state.authentication.role
       const userId = this.$store.state.authentication.userId
