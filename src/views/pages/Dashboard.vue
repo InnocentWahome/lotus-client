@@ -21,13 +21,6 @@
         />
         <card-widget
           class="tile is-child"
-          type="is-info"
-          icon="square-edit-outline"
-          :number="$store.state.deliveries.deliveriesCount.toString()"
-          label="Deliveries"
-        />
-        <card-widget
-          class="tile is-child"
           type="is-secondary"
           icon="account-circle"
           :number="$store.state.users.usersCount.toString()"
@@ -97,7 +90,6 @@ export default defineComponent({
   created () {
     this.$store.dispatch('products/getAllProducts')
     this.$store.dispatch('orders/getAllOrders')
-    this.$store.dispatch('deliveries/getAllDeliveries')
     this.$store.dispatch('users/getAllUsers')
   },
   methods: {

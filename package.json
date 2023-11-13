@@ -1,5 +1,5 @@
 {
-  "name": "lotus-vue-bulma-dashboard",
+  "name": "nyeri-traders-client",
   "version": "2.3.0",
   "scripts": {
     "dev": "vite --host",

@@ -174,7 +174,7 @@ export default defineComponent({
       this.isModalActive = false
     },
     deleteItem (obj) {
-      this.$store.dispatch('users/deleteDelivery', obj.id)
+      // this.$store.dispatch('users/deleteDelivery', obj.id)
       this.$buefy.snackbar.open({
         message: 'Deleted user ' + obj.firstName,
         queue: true

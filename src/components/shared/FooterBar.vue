@@ -5,7 +5,7 @@
   >
     <div class="container-fluid">
       <div class="footer-copyright has-text-centered">
-        <b>&copy; {{ year }}, lotus.me</b>. <a
+        <b>&copy; {{ year }}, nyeri-traders.com</b>. <a
           href="#"
           target="_blank"
         >GitHub</a>

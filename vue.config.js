@@ -1,10 +1,10 @@
 module.exports = {
   publicPath: process.env.DEPLOY_ENV === 'GH_PAGES'
-    ? '/lotus/'
+    ? '/nyeri-traders.com/'
     : '/',
 
   pwa: {
-    name: 'Lotus',
+    name: 'Nyeri Traders',
     themeColor: '#344675',
     msTileColor: '#344675',
     appleMobileWebAppCapable: 'yes',

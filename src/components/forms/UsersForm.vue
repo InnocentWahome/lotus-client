@@ -60,7 +60,7 @@
             >
               <b-input
                 v-model="form.email"
-                placeholder="e.g. johndoe@lotus.com"
+                placeholder="e.g. johndoe@nyeri-traders.com"
                 required
               />
             </b-field>
