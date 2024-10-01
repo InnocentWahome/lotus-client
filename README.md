@@ -1,12 +1,12 @@
-# Nyeri Traders - (client)
+# Lotus - (client)
 
-> MarketPlace Ecommerce Application
+> MarketPlace E-commerce Application
 
 ## Quick Installation
 
 ```bash
 ### Clone the git repository
-git clone https://github.com/e-kraus/nyeri-traders-client.git
+git clone https://github.com/innocent-maina/lotus-client.git
 
 ### Setup environment variables
 cp .env.example .env
@@ -23,4 +23,4 @@ npm start
 
 ### Author
 
-- [Prudence Wanjau](mailto: pruwanjish@gmail.com)
+- [Innocent Maina](mailto: innocentwahome@gmail.com)
